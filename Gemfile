@@ -30,12 +30,17 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 group :test, :development do
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'factory_girl_rails', '~> 4.5.0'
 end
 
 group :test do
-  gem 'shoulda-matchers'
+	gem 'shoulda-matchers', require: false
+	gem 'faker', '~> 1.4.3'
+	gem 'capybara', '~> 2.4.4'
+	gem 'database_cleaner', '~> 1.3.0'
+	gem 'launchy', '~> 2.4.3'
+	gem 'selenium-webdriver', '~> 2.44.0'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
