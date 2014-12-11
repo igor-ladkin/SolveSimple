@@ -1,0 +1,14 @@
+.row
+	.col-xs-10 class='col-xs-offset-1 text-center'
+		.jumbotron
+			h1
+				= @question.title
+			p.lead
+				= @question.body
+			.text-right
+				
+				.btn-group role='group' aria-label='buttons for managing question'
+					= link_to 'Back', questions_path, :class => 'btn btn-default'	
+					= link_to 'Edit', edit_question_path(@question), :class => 'btn btn-default'
+					= link_to 'Delete', @question, :method => :delete, :class => 'btn btn-default'
+				/a.btn class='btn-lg btn-success' href='#'
