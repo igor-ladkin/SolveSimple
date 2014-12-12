@@ -16,8 +16,7 @@ body
 		nav.navbar class='navbar-default navbar-fixed-top navbar-inverse' role='navigation'
 			.container-fluid
 				.navbar-header
-					a.navbar-brand href='#'
-						img src='#' alt='Solve Simple logo'
+					a.navbar-brand
 	.container
 		= yield
 	
