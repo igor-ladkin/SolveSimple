@@ -5,9 +5,8 @@
 				= @question.title
 			p.lead
 				= @question.body
-			.text-right
-				
+			.text-right				
 				.btn-group role='group' aria-label='buttons for managing question'
 					= link_to 'Back', questions_path, :class => 'btn btn-default'	
 					= link_to 'Edit', edit_question_path(@question), :class => 'btn btn-default'
-					= link_to 'Delete', @question, :method => :delete, :class => 'btn btn-default'
+					= link_to 'Delete', @question, :method => :delete, data: { confirm: "Are you sure?" }, :class => 'btn btn-default'
