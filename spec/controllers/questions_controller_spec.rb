@@ -2,14 +2,20 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, :type => :controller do
 	let(:question) { create(:question) }
+	let(:question_with_answers) {  }
 
 	describe 'GET #index' do
 		let(:questions) { create_list(:question, 2) }
+		let(:latest_question) { create(:question) }
 
 		before { get :index }
 
-		it 'populates an array of  all questions' do
+		it 'populates an array of all questions' do
 			expect(assigns(:questions)).to match_array(questions)
+		end
+
+		it 'displays questions according their date of creation in a descending order' do
+			expect(assigns(:questions)).to eq questions.reverse.unshift(latest_question)
 		end
 
 		it 'renders the :index template' do
@@ -22,6 +28,10 @@ RSpec.describe QuestionsController, :type => :controller do
 
 		it 'assigns requested question to @question' do
 			expect(assigns(:question)).to eq question
+		end
+
+		it 'populates an array of all answers to this question' do
+			expect(assigns(:answers)).to match_array question.answers
 		end
 
 		it 'renders the :show template' do

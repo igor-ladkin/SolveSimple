@@ -1,0 +1,4 @@
+= simple_form_for [@question, @answer] do |f|
+	= f.input :body, :input_html => { :rows => 4 }
+	.text-center
+		= f.button :submit

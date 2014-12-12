@@ -5,13 +5,7 @@ RSpec.describe Question, :type => :model do
   	expect(build(:question)).to be_valid
   end
 	
-	it 'is invalid without title' do
-		expect(build(:question, title: nil)).not_to be_valid
-	end  
-
-	it 'is invalid without body' do
-		expect(build(:question, body: nil)).not_to be_valid
-	end
-  #it { should validates_presence_of :title }
-  #it { should validates_presence_of :body }
+  it { is_expected.to validate_presence_of :title }
+  it { is_expected.to validate_presence_of :body }
+  it { is_expected.to have_many(:answers) }
 end
