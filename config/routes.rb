@@ -3,7 +3,9 @@ Rails.application.routes.draw do
     resources :answers, except: [:index, :show]
   end
 
-  root to: 'questions#index'
+  devise_for :users
+
+  root to: 'questions#index' 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
