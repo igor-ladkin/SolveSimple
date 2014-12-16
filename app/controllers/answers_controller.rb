@@ -1,8 +1,12 @@
 class AnswersController < ApplicationController
 	before_action :get_question
+	before_action :load_answer, only: [:show, :edit, :update, :destroy]
 
 	def new
 		@answer = Answer.new
+	end
+
+	def edit
 	end
 
 	def create
@@ -15,10 +19,22 @@ class AnswersController < ApplicationController
 		end
 	end
 
+	def update
+		if @answer.update(answer_params)
+			redirect_to @question
+		else
+			render :edit
+		end
+	end
+
 	private
 
 	def get_question
 		@question = Question.find(params[:question_id])
+	end
+
+	def load_answer
+		@answer = @question.answers.find(params[:id])
 	end
 
 	def answer_params
