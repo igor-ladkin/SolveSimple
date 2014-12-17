@@ -1,0 +1,10 @@
+nav.navbar class='navbar-default navbar-fixed-top navbar-inverse' role='navigation'
+	.container
+		navbar-header
+			= link_to 'Solve Simple', root_path, :class => 'navbar-brand'
+		#navbar
+			ul.nav class='navbar-nav navbar-right'
+				li
+					= link_to 'Sing up', new_user_registration_path
+				li
+					= link_to 'Login', new_user_session_path

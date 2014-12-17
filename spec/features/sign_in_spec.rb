@@ -5,11 +5,14 @@ feature 'User sign in', %q{
 	As a user
 	I want to be able to sign in
 } do
-	
+	background do
+		visit root_path
+		click_on 'Login'
+	end
+
 	scenario 'Registered user tries to sign in' do
 		user = create(:user)
 
-		visit new_user_session_path
 		fill_in 'Email', with: user.email
 		fill_in 'Password', with: user.password
 		click_on 'Log in'
@@ -19,7 +22,6 @@ feature 'User sign in', %q{
 	end
 
 	scenario 'Non-registered user tries to sign in' do
-		visit new_user_session_path
 		fill_in 'Email', with: 'newuser@example.com'
 		fill_in 'Password', with: 'secret123'
 		click_on 'Log in'
