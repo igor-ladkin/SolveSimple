@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Editing an answer', %q{
-	In order to be able to change my option on a question
+	In order to be able to change my option on the question
 	As a user
 	I want to edit content of answer's body
 } do
@@ -16,10 +16,10 @@ feature 'Editing an answer', %q{
 		within find('li', text: answer.body) do
 			click_on 'Edit'
 		end
-		fill_in 'Body', with: 'I changed my mind.'
+		fill_in 'Body', with: "I've changed my mind."
 		click_on 'Update Answer'
 
-		expect(page).to have_content 'I changed my mind.'
+		expect(page).to have_content "I've changed my mind."
 		expect(current_path).to eq question_path(question.id)
 	end
 
