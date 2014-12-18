@@ -4,7 +4,13 @@ nav.navbar class='navbar-default navbar-fixed-top navbar-inverse' role='navigati
 			= link_to 'Solve Simple', root_path, :class => 'navbar-brand'
 		#navbar
 			ul.nav class='navbar-nav navbar-right'
-				li
-					= link_to 'Sign up', new_user_registration_path
-				li
-					= link_to 'Login', new_user_session_path
+				- if user_signed_in?
+					li
+						p.navbar-text Hello #{current_user.email}
+					li
+						= link_to 'Logout', destroy_user_session_path, :method => :delete
+				- else
+					li
+						= link_to 'Sign up', new_user_registration_path
+					li
+						= link_to 'Login', new_user_session_path
