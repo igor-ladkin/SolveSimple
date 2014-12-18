@@ -8,6 +8,8 @@ RSpec.describe AnswersController, :type => :controller do
 
 	shared_examples 'private access to answers' do
 		describe 'GET #new' do
+			sign_in_user
+
 			before { get :new, question_id: question.id  }
 
 			it 'assigns new answer to @answer' do
@@ -20,6 +22,8 @@ RSpec.describe AnswersController, :type => :controller do
 		end
 
 		describe 'POST #create' do
+			sign_in_user
+
 			context 'with valid attributes' do
 				it 'saves the new answer to the question in the database' do
 					expect { post :create, question_id: question.id, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
@@ -46,6 +50,8 @@ RSpec.describe AnswersController, :type => :controller do
 
 	shared_examples 'full access to answers' do
 		describe 'GET #edit' do
+			sign_in_user
+
 			before { get :edit, question_id: question, id: answer }
 
 			it 'assigns requested answer to @answer' do
@@ -58,6 +64,8 @@ RSpec.describe AnswersController, :type => :controller do
 		end
 
 		describe 'PATCH #update' do
+			sign_in_user
+
 			context 'with valid attributes' do
 				it 'assigns requested answer to @answer' do
 					patch :update, question_id: question.id, id: answer, answer: attributes_for(:answer)
@@ -93,6 +101,8 @@ RSpec.describe AnswersController, :type => :controller do
 		end
 
 		describe 'DELETE #destroy' do
+			sign_in_user
+
 			before { answer }
 
 			it 'deletes the answer from the database' do
@@ -107,14 +117,10 @@ RSpec.describe AnswersController, :type => :controller do
 	end
 
 	context 'user access to answers' do
-		before { set_user_session(user) }
-
 		it_behaves_like 'private access to answers'
 	end
 
 	context 'author access to answers' do
-		before { set_user_session(author) }
-
 		it_behaves_like 'private access to answers'
 		it_behaves_like 'full access to answers'
 	end
@@ -136,14 +142,14 @@ RSpec.describe AnswersController, :type => :controller do
 
 		describe 'GET #edit' do
 			it 'requires login' do
-				get :edit, question_id: question.id
+				get :edit, question_id: question.id, id: answer
 				expect(response).to require_login
 			end
 		end
 
 		describe 'PATCH #update' do
 			it 'requires login' do
-				patch :update, question_id: question.id, answer: attributes_for(:answer)
+				patch :update, question_id: question.id, id: answer, answer: attributes_for(:answer)
 				expect(response).to require_login
 			end
 		end

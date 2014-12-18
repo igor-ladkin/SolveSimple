@@ -5,10 +5,13 @@ feature 'Add answer', %q{
 	As a user
 	I want to be able to add my answer to a specific question
 } do
+	given!(:user) { create(:user) }
 	given!(:question) { create(:question) }
 
 	context 'Authenticated user tries to' do
 		scenario 'add a new answer' do
+			sign_in user
+
 			visit question_path(question.id)
 			click_on 'Answer'
 			fill_in 'Body', with: 'In my opinion this is not relevant.'
@@ -19,6 +22,8 @@ feature 'Add answer', %q{
 		end
 
 		scenario 'add an invalid new answer' do
+			sign_in user
+			
 			visit question_path(question.id)
 			click_on 'Answer'
 			fill_in 'Body', with: nil

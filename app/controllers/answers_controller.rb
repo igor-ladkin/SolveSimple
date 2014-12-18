@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
 	before_action :get_question
-	before_action :load_answer, only: [:show, :edit, :update, :destroy]
+	before_action :load_answer, only: [:edit, :update, :destroy]
+	before_action :authenticate_user!
 
 	def new
 		@answer = Answer.new
@@ -10,7 +11,7 @@ class AnswersController < ApplicationController
 	end
 
 	def create
-		@answer = @question.answers.new(answer_params)
+		@answer = @question.answers.new(answer_params.merge(user: current_user))
 
 		if @answer.save
 			redirect_to @question

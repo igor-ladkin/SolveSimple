@@ -5,10 +5,13 @@ feature 'Editing an answer', %q{
 	As a user
 	I want to edit content of answer's body
 } do
+	given!(:user) { create(:user) }
 	given!(:question) { create(:question) }
 	given!(:answer) { create(:answer, question: question) }
 
 	scenario 'with a new valid content' do
+		sign_in user
+
 		visit question_path(question.id)
 		within find('li', text: answer.body) do
 			click_on 'Edit'
@@ -21,6 +24,8 @@ feature 'Editing an answer', %q{
 	end
 
 	scenario 'with an invalid new content' do
+		sign_in user
+
 		visit question_path(question.id)
 		within find('li', text: answer.body) do
 			click_on 'Edit'
