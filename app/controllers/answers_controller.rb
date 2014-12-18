@@ -14,7 +14,7 @@ class AnswersController < ApplicationController
 		@answer = @question.answers.new(answer_params.merge(user: current_user))
 
 		if @answer.save
-			redirect_to @question
+			redirect_to @question, notice: 'Your answer was successfully created.'
 		else
 			render :new
 		end

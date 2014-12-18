@@ -17,8 +17,11 @@ feature 'Add answer', %q{
 			fill_in 'Body', with: 'In my opinion this is not relevant.'
 			click_on 'Create Answer'
 
+			expect(page).to have_content 'Your answer was successfully created.'
+			within '.answers' do
+				expect(page).to have_content 'In my opinion this is not relevant.'
+			end
 			expect(current_path).to eq question_path(question.id)
-			expect(page).to have_content 'In my opinion this is not relevant.'
 		end
 
 		scenario 'add an invalid new answer' do
@@ -38,8 +41,8 @@ feature 'Add answer', %q{
 			visit question_path(question)
 			click_on 'Answer'
 
-			expect(current_path).to eq new_user_session_path
 			expect(page).to have_content 'You need to sign in or sign up before continuing.'
+			expect(current_path).to eq new_user_session_path
 		end
 	end
 end

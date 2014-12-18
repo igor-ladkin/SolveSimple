@@ -15,5 +15,5 @@
 						= link_to 'Delete', @question, :method => :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default'
 		- unless @answers.empty?
 			hr
-			ul.list-group
+			ul.list-group class='answers'
 				= render @answers
