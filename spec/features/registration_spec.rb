@@ -25,30 +25,15 @@ feature 'User registration', %q{
 			expect(current_path).to eq root_path
 		end
 
-		scenario 'with an existing email' do
+		scenario 'with an invalid parameters' do
 			fill_in 'Email', with: existing_user.email
-			find('.user_password').fill_in 'Password', with: existing_user.password
-			find('.user_password_confirmation').fill_in 'Password confirmation', with: existing_user.password
-			click_button 'Sign up'
-
-			expect(page).to have_content('has already been taken')
-		end
-
-		scenario 'with an invalid password' do
-			fill_in 'Email', with: new_user.email
 			find('.user_password').fill_in 'Password', with: '123'
-			find('.user_password_confirmation').fill_in 'Password confirmation', with: '123'
+			find('.user_password_confirmation').fill_in 'Password confirmation', with: 'secret123'
 			click_button 'Sign up'
 
-			expect(page).to have_content('is too short (minimum is 8 characters)') 
-		end
-
-		scenario 'with a valid password and wrong confimation' do
-			fill_in 'Email', with: new_user.email
-			find('.user_password').fill_in 'Password', with: new_user.password
-			find('.user_password_confirmation').fill_in 'Password confirmation', with: '123'
-			click_button 'Sign up'
-
+			save_and_open_page
+			expect(page).to have_content('has already been taken')
+			expect(page).to have_content('is too short (minimum is 8 characters)')
 			expect(page).to have_content("doesn't match Password") 
 		end
 	end

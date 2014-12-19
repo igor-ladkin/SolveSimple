@@ -13,7 +13,7 @@ feature 'Editing a question', %q{
 			sign_in user
 
 			visit question_path(question.id)
-			within('div.jumbotron') do
+			within('.question-controls') do
 				click_on 'Edit'
 			end
 			fill_in 'Title', with: 'Wait!'
@@ -28,7 +28,7 @@ feature 'Editing a question', %q{
 			sign_in user
 
 			visit question_path(question.id)
-			within('div.jumbotron') do
+			within('.question-controls') do
 				click_on 'Edit'
 			end
 			fill_in 'Title', with: nil
@@ -42,7 +42,7 @@ feature 'Editing a question', %q{
 	context 'Non-authenticated user tries to' do
 		scenario 'edit the question' do
 			visit question_path(question.id)
-			within('div.jumbotron') do
+			within('.question-controls') do
 				click_on 'Edit'
 			end
 			

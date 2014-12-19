@@ -1,17 +1,18 @@
 .row
 	.col-sm-10 class='col-sm-offset-1 text-center'
-		.jumbotron
+		.jumbotron class='question'
 			h1
 				= @question.title
 			p.lead
 				= @question.body
 			.text-left class='col-sm-6'
 				= link_to 'Answer', new_question_answer_path(@question), :class => 'btn btn-success'
-			.text-right	class='col-sm-6'			
-				.btn-group role='group' aria-label='buttons for managing question'
-					= link_to 'Back', questions_path, :class => 'btn btn-default'	
-					= link_to 'Edit', edit_question_path(@question), :class => 'btn btn-default'
-					= link_to 'Delete', @question, :method => :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default'
+			.text-right	class='col-sm-6'
+				.question-controls			
+					.btn-group role='group' aria-label='buttons for managing question'
+						= link_to 'Back', questions_path, :class => 'btn btn-default'	
+						= link_to 'Edit', edit_question_path(@question), :class => 'btn btn-default'
+						= link_to 'Delete', @question, :method => :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default'
 		- unless @answers.empty?
 			hr
 			ul.list-group

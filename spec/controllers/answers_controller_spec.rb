@@ -4,7 +4,7 @@ RSpec.describe AnswersController, :type => :controller do
 	let!(:question) { create(:question) }
 	let!(:author) { create(:user) }
 	let(:user) { create(:user) }
-	let(:answer) { create(:answer, question: question, user: user) }
+	let(:answer) { create(:answer, question: question, user: @user) }
 
 	shared_examples 'private access to answers' do
 		describe 'GET #new' do
@@ -129,36 +129,33 @@ RSpec.describe AnswersController, :type => :controller do
 		describe 'GET #new' do
 			it 'requires login' do
 				get :new, question_id: question.id
-				expect(response).to require_login
 			end
 		end
 
 		describe 'POST #create' do
 			it 'requires login' do
 				post :create, question_id: question.id, answer: attributes_for(:answer)
-				expect(response).to require_login
 			end
 		end
 
 		describe 'GET #edit' do
 			it 'requires login' do
 				get :edit, question_id: question.id, id: answer
-				expect(response).to require_login
 			end
 		end
 
 		describe 'PATCH #update' do
 			it 'requires login' do
 				patch :update, question_id: question.id, id: answer, answer: attributes_for(:answer)
-				expect(response).to require_login
 			end
 		end
 
 		describe 'DELETE #destroy' do
 			it 'requires login' do
 				delete :destroy, question_id: question.id, id: answer
-				expect(response).to require_login
 			end
 		end
+
+		after { expect(response).to require_login }
 	end
 end

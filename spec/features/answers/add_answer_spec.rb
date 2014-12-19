@@ -12,7 +12,7 @@ feature 'Add answer', %q{
 		scenario 'add a new answer' do
 			sign_in user
 
-			visit question_path(question.id)
+			visit question_path(question)
 			click_on 'Answer'
 			fill_in 'Body', with: 'In my opinion this is not relevant.'
 			click_on 'Create Answer'
@@ -24,7 +24,7 @@ feature 'Add answer', %q{
 		scenario 'add an invalid new answer' do
 			sign_in user
 			
-			visit question_path(question.id)
+			visit question_path(question)
 			click_on 'Answer'
 			fill_in 'Body', with: nil
 			click_on 'Create Answer'
@@ -35,7 +35,7 @@ feature 'Add answer', %q{
 
 	context 'Non-authenticated user tries to' do
 		scenario 'add a new answer' do
-			visit question_path(question.id)
+			visit question_path(question)
 			click_on 'Answer'
 
 			expect(current_path).to eq new_user_session_path

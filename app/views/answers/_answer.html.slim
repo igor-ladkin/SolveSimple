@@ -1,7 +1,8 @@
-li.list-group-item 
+li.list-group-item class='answer'
 	p = answer.body
 	.text-right
-		.btn-group role='group' aria-label='buttons for managing answer' 
-			= link_to 'Edit', edit_question_answer_path(@question, answer), :class => 'btn btn-warning btn-xs'
-			= link_to 'Delete', [@question, answer], :method => :delete, data: { confirm: 'Are you sure?' },
-																							 :class => 'btn btn-danger btn-xs'
+		.answer-controls
+			.btn-group role='group' aria-label='buttons for managing answer' 
+				= link_to 'Edit', edit_question_answer_path(@question, answer), :class => 'btn btn-warning btn-xs'
+				= link_to 'Delete', [@question, answer], :method => :delete, data: { confirm: 'Are you sure?' },
+																								 :class => 'btn btn-danger btn-xs'

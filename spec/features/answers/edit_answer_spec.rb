@@ -13,7 +13,7 @@ feature 'Editing an answer', %q{
 		sign_in user
 
 		visit question_path(question.id)
-		within find('li', text: answer.body) do
+		within find('.answer', text: answer.body) do
 			click_on 'Edit'
 		end
 		fill_in 'Body', with: "I've changed my mind."
@@ -27,7 +27,7 @@ feature 'Editing an answer', %q{
 		sign_in user
 
 		visit question_path(question.id)
-		within find('li', text: answer.body) do
+		within find('.answer', text: answer.body) do
 			click_on 'Edit'
 		end
 		fill_in 'Body', with: nil
