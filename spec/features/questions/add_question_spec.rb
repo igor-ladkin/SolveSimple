@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'feature_helper'
 
 feature 'Add question', %q{
 	In order to get answer from community
@@ -8,8 +8,8 @@ feature 'Add question', %q{
 	given!(:user) { create(:user) }
 
 	context 'Authenticated user tries to' do
-		scenario 'add a new question' do
-			sign_in user
+		scenario 'add a new question', js: true do
+			sign_in(user)
 
 			visit questions_path
 			click_on 'Ask question'
@@ -21,7 +21,7 @@ feature 'Add question', %q{
 			expect(page).to have_content 'Can you give a simple answer?'
 		end
 
-		scenario 'add an invalid new question' do
+		scenario 'add an invalid new question', js: true do
 			sign_in user
 
 			visit questions_path
@@ -34,7 +34,7 @@ feature 'Add question', %q{
 		end
 	end
 
-	context 'Non-authenticated user tries to' do
+	context 'Non-authenticated user tries to', js: true do
 		scenario 'add a new question' do
 			visit questions_path
 			click_on 'Ask question'

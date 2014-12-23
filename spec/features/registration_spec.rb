@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'feature_helper'
 
 feature 'User registration', %q{
 	In order to get full user experience of using a system
