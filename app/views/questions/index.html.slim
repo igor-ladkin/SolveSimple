@@ -6,7 +6,10 @@
 		  br
 		  |	Help them and get some karma points, because the last thing you would like to do is joking bad with karma.
 		.text-center
-			= link_to 'Ask question', new_question_path, :class => 'btn btn-primary btn-lg'
+			= link_to 'Ask question', new_question_path, remote: true, class: 'btn btn-primary btn-lg', 
+				data: { toggle: 'modal', target: '#formModal'}
+
+			/= button_tag 
 			hr
 .row
 	.col-sm-10 class='col-sm-offset-1'
