@@ -1,4 +1,4 @@
-= simple_form_for @question, html: { role: 'form' } do |f|
+= simple_form_for @question, remote: true, html: { role: 'form' } do |f|
 	= f.input :title
 	= f.input :body, input_html: { rows: 4 }
 	.text-center

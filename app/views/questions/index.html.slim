@@ -5,12 +5,11 @@
 		  | This is a short list of problems which humanity tries to solve in their everyday life.
 		  br
 		  |	Help them and get some karma points, because the last thing you would like to do is joking bad with karma.
-		.text-center
-			= link_to 'Ask question', new_question_path, remote: true, class: 'btn btn-primary btn-lg', 
-				data: { toggle: 'modal', target: '#formModal'}
-
-			/= button_tag 
-			hr
+		- if user_signed_in?
+			.text-center
+				= link_to 'Ask question', new_question_path, remote: true, class: 'btn btn-primary btn-lg', 
+					data: { toggle: 'modal', target: '#formModal'}
+		hr
 .row
 	.col-sm-10 class='col-sm-offset-1'
 		.list-group

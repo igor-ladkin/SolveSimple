@@ -37,10 +37,8 @@ feature 'Add question', %q{
 	context 'Non-authenticated user tries to', js: true do
 		scenario 'add a new question' do
 			visit questions_path
-			click_on 'Ask question'
 
-			expect(current_path).to eq new_user_session_path
-			expect(page).to have_content 'You need to sign in or sign up before continuing.'
+			expect(page).not_to have_link 'Ask question'
 		end
 	end
 end

@@ -12,6 +12,11 @@ class QuestionsController < ApplicationController
 
 	def new
 		@question = Question.new
+
+		respond_to do |format|
+			format.html { redirect_to root_path }
+			format.js
+		end
 	end
 
 	def edit	
@@ -20,10 +25,13 @@ class QuestionsController < ApplicationController
 	def create
 		@question = current_user.questions.new(question_params)
 
-		if @question.save
-			redirect_to @question, notice: 'Your question was successfully created.'
-		else
-			render :new
+		respond_to do |format|
+			if @question.save
+				flash[:notice] = 'Your question was successfully created.'
+				format.js
+			else
+				format.js { render :new }
+			end
 		end
 	end
 

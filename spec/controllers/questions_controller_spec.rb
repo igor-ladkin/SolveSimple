@@ -42,14 +42,23 @@ RSpec.describe QuestionsController, :type => :controller do
 	describe 'GET #new' do
 		sign_in_user
 
-		before { get :new }
+		context 'with AJAX request' do
+			before { xhr :get, :new }
 
-		it 'it assigns new Question to @question' do
-			expect(assigns[:question]).to be_a_new(Question)
+			it 'assigns new Question to @question' do
+				expect(assigns[:question]).to be_a_new(Question)
+			end
+
+			it 'renders the :new template' do
+				expect(response).to render_template :new
+			end
 		end
 
-		it 'renders the :new template' do
-			expect(response).to render_template :new
+		context 'with HTTP request' do
+			it 'redirects to root path' do
+				get :new
+				expect(response).to redirect_to(root_path)
+			end
 		end
 	end
 
@@ -72,21 +81,21 @@ RSpec.describe QuestionsController, :type => :controller do
 
 		context 'with valid attributes' do
 			it 'saves the new question in the database' do
-				expect { post :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
+				expect { xhr :post, :create, question: attributes_for(:question) }.to change(Question, :count).by(1)
 			end
 
 			it 'redirects to questions#show' do
-				post :create, question: attributes_for(:question)
-				expect(response).to redirect_to question_path(assigns(:question))
+				xhr :post, :create, question: attributes_for(:question)
+				expect(response).to render_template :create
 			end
 		end
 
 		context 'with invlid attributes' do
 			it 'does not save the new question in the database' do
-				expect { post :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
+				expect { xhr :post, :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
 			end
 			it 're-renders the :new template' do
-				post :create, question: attributes_for(:invalid_question)
+				xhr :post, :create, question: attributes_for(:invalid_question)
 				expect(response).to render_template :new
 			end
 		end
