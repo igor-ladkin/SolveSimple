@@ -1,4 +1,4 @@
-require_relative 'feature_helper'
+require_relative '../feature_helper'
 
 feature 'Editing an answer', %q{
 	In order to be able to change my option on the question

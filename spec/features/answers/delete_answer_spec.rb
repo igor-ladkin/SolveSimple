@@ -1,4 +1,4 @@
-require_relative 'feature_helper'
+require_relative '../feature_helper'
 
 feature 'Deleting an answer', %q{
 	In order to be able to erase uncorrect answers

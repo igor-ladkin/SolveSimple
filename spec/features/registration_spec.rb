@@ -31,7 +31,6 @@ feature 'User registration', %q{
 			find('.user_password_confirmation').fill_in 'Password confirmation', with: 'secret123'
 			click_button 'Sign up'
 
-			save_and_open_page
 			expect(page).to have_content('has already been taken')
 			expect(page).to have_content('is too short (minimum is 8 characters)')
 			expect(page).to have_content("doesn't match Password") 
