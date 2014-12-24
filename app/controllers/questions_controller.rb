@@ -7,7 +7,6 @@ class QuestionsController < ApplicationController
 	end
 
 	def show
-		@answers = @question.answers
 	end
 
 	def new
@@ -19,7 +18,11 @@ class QuestionsController < ApplicationController
 		end
 	end
 
-	def edit	
+	def edit
+		respond_to do |format|
+			format.html { redirect_to @question }
+			format.js
+		end
 	end
 
 	def create
@@ -36,10 +39,12 @@ class QuestionsController < ApplicationController
 	end
 
 	def update
-		if @question.update(question_params)
-			redirect_to @question
-		else
-			render :edit
+		respond_to do |format|
+			if @question.update(question_params)
+				format.js
+			else
+				format.js { render :edit }
+			end
 		end
 	end
 

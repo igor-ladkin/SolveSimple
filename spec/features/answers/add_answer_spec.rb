@@ -9,11 +9,11 @@ feature 'Add answer', %q{
 	given!(:question) { create(:question) }
 
 	context 'Authenticated user tries to' do
-		scenario 'add a new answer' do
+		scenario 'add a new answer', js: true do
 			sign_in user
 
 			visit question_path(question)
-			click_on 'Answer'
+			click_on 'Add Answer'
 			fill_in 'Body', with: 'In my opinion this is not relevant.'
 			click_on 'Create Answer'
 
@@ -24,11 +24,11 @@ feature 'Add answer', %q{
 			expect(current_path).to eq question_path(question.id)
 		end
 
-		scenario 'add an invalid new answer' do
+		scenario 'add an invalid new answer', js: true do
 			sign_in user
 			
 			visit question_path(question)
-			click_on 'Answer'
+			click_on 'Add Answer'
 			fill_in 'Body', with: nil
 			click_on 'Create Answer'
 
@@ -36,13 +36,11 @@ feature 'Add answer', %q{
 		end
 	end
 
-	context 'Non-authenticated user tries to' do
+	context 'Non-authenticated user tries to', js: true do
 		scenario 'add a new answer' do
 			visit question_path(question)
-			click_on 'Answer'
 
-			expect(page).to have_content 'You need to sign in or sign up before continuing.'
-			expect(current_path).to eq new_user_session_path
+			expect(page).not_to have_link 'Add Answer'
 		end
 	end
 end

@@ -1,37 +1,33 @@
 require_relative '../feature_helper'
 
 feature 'Deleting an answer', %q{
-	In order to be able to erase uncorrect answers
+	In order to be able to erase incorrect answers
 	As a user
 	I want to delete an answer
 } do
 	given!(:user) { create(:user) }
-	given!(:question) { create(:question) }
-	given!(:answer) { create(:answer, question: question) }
+	given!(:question) { create(:question, user: user) }
+	given!(:answer) { create(:answer, question: question, user: user) }
 
-	scenario 'with confirmation' do
-		sign_in user
+	context 'Authenticated user tries to' do
+		scenario 'delete an answer', js: true do
+			sign_in user
 
-		visit question_path(question.id)
-		within find('li', text: answer.body) do
-			click_on 'Delete'
+			visit question_path(question)
+			within find('li', text: answer.body) do
+				click_on 'Delete'
+			end
+
+			expect(page).to_not have_content(answer.body)
+			expect(current_path).to eq question_path(question)
 		end
-		page.accept_alert 'Are you sure?' do
-  		click_button('OK')
-		end
-
-		expect(current_path).to eq question_path(question.id)
 	end
 
-	scenario 'with cancelation' do
-		sign_in user
+	context 'Non-authenticated user tries to' do
+		scenario 'delete an answer', js: true do
+			visit question_path(question)
 
-		visit question_path(question.id)
-		within find('li', text: answer.body) do
-			click_on 'Delete'
+			expect(page).to_not have_selector('.answer-controls')
 		end
-		page.driver.browser.alert.dismiss
-
-		expect(current_path).to eq question_path(question.id)
 	end
 end

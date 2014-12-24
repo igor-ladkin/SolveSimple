@@ -1,0 +1,9 @@
+$('#formModal').modal('toggle');
+
+if( $('.alert-info').length ){
+	$('.alert-info').html('Your answer was successfully updated.');
+} else {
+	$('#main').prepend('<div class="alert alert-info">Your answer was successfully updated.</div>');
+}
+
+$('.answers').html('<%= j render "questions/answers" %>');

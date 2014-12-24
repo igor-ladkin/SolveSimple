@@ -1,0 +1,11 @@
+- @question.answers.order(:created_at).each do |answer|
+	li.list-group-item class='answer'
+		p = answer.body
+		.text-right
+			- if user_signed_in?
+				.answer-controls
+					.btn-group role='group' aria-label='buttons for managing answer' 
+						= link_to 'Edit', edit_question_answer_path(@question, answer), remote: true, class: 'btn btn-warning btn-xs',
+							data: { toggle: 'modal', target: '#formModal' }
+						= link_to 'Delete', [@question, answer], method: :delete, data: { confirm: 'Are you sure?' },
+							class: 'btn btn-danger btn-xs'

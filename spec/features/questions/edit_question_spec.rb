@@ -9,10 +9,10 @@ feature 'Editing a question', %q{
 	given!(:question) { create(:question) }
 
 	context 'Authenticated user tries to' do
-		scenario 'edit the question with valid parameters' do
+		scenario 'edit the question with valid parameters', js: true do
 			sign_in user
 
-			visit question_path(question.id)
+			visit question_path(question)
 			within('.question-controls') do
 				click_on 'Edit'
 			end
@@ -21,13 +21,13 @@ feature 'Editing a question', %q{
 			click_on 'Update Question'
 
 			expect(page).to have_content 'Wait!'
-			expect(current_path).to eq question_path(question.id)
+			expect(current_path).to eq question_path(question)
 		end
 
-		scenario 'edit the question with invalid parameters' do
+		scenario 'edit the question with invalid parameters', js: true do
 			sign_in user
 
-			visit question_path(question.id)
+			visit question_path(question)
 			within('.question-controls') do
 				click_on 'Edit'
 			end
@@ -40,14 +40,10 @@ feature 'Editing a question', %q{
 	end
 
 	context 'Non-authenticated user tries to' do
-		scenario 'edit the question' do
-			visit question_path(question.id)
-			within('.question-controls') do
-				click_on 'Edit'
-			end
+		scenario 'edit the question', js: true do
+			visit question_path(question)
 			
-			expect(current_path).to eq new_user_session_path
-			expect(page).to have_content 'You need to sign in or sign up before continuing.'
+			expect(page).to_not have_selector('.question-controls')
 		end
 	end
 end

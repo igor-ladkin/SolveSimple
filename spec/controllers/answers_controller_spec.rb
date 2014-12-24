@@ -10,14 +10,23 @@ RSpec.describe AnswersController, :type => :controller do
 		describe 'GET #new' do
 			sign_in_user
 
-			before { get :new, question_id: question.id  }
+			context 'with AJAX request' do
+				before { xhr :get, :new, question_id: question }
 
-			it 'assigns new answer to @answer' do
-				expect(assigns[:answer]).to be_a_new(Answer)
+				it 'assigns new answer to @answer' do
+					expect(assigns[:answer]).to be_a_new(Answer)
+				end
+
+				it 'renders the :new template' do
+					expect(response).to render_template :new
+				end
 			end
 
-			it 'renders the :new template' do
-				expect(response).to render_template :new
+			context 'with HTTP request' do
+				it 'redirects to question#show' do
+					get :new, question_id: question
+					expect(response).to redirect_to question_path(question)
+				end
 			end
 		end
 
@@ -26,22 +35,22 @@ RSpec.describe AnswersController, :type => :controller do
 
 			context 'with valid attributes' do
 				it 'saves the new answer to the question in the database' do
-					expect { post :create, question_id: question.id, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
+					expect { xhr :post, :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
 				end
 
 				it 'redirects to question#show' do
-					post :create, question_id: question.id, answer: attributes_for(:answer)
-					expect(response).to redirect_to question_path(question.id)
+					xhr :post, :create, question_id: question, answer: attributes_for(:answer)
+					expect(response).to render_template :create
 				end
 			end
 
 			context 'with invalid attributes' do
 				it 'does not save the new answer in the database' do
-					expect { post :create, question_id: question.id, answer: attributes_for(:answer, body: nil) }.to_not change(Answer, :count)
+					expect { xhr :post, :create, question_id: question, answer: attributes_for(:answer, body: nil) }.to_not change(Answer, :count)
 				end
 
 				it 're-renders the :new template' do
-					post :create, question_id: question.id, answer: attributes_for(:answer, body: nil)
+					xhr :post, :create, question_id: question, answer: attributes_for(:answer, body: nil)
 					expect(response).to render_template :new
 				end
 			end
@@ -52,14 +61,23 @@ RSpec.describe AnswersController, :type => :controller do
 		describe 'GET #edit' do
 			sign_in_user
 
-			before { get :edit, question_id: question, id: answer }
+			context 'with AJAX request' do
+				before { xhr :get, :edit, question_id: question, id: answer }
 
-			it 'assigns requested answer to @answer' do
-				expect(assigns[:answer]).to eq answer
+				it 'assigns requested answer to @answer' do
+					expect(assigns[:answer]).to eq answer
+				end
+
+				it 'renders the :edit template' do
+					expect(response).to render_template :edit
+				end
 			end
 
-			it 'renders the :edit template' do
-				expect(response).to render_template :edit
+			context 'with HTTP request' do
+				it 'redirects to question#show' do
+					get :edit, question_id: question, id: answer
+					expect(response).to redirect_to question_path(question)
+				end
 			end
 		end
 
@@ -68,26 +86,26 @@ RSpec.describe AnswersController, :type => :controller do
 
 			context 'with valid attributes' do
 				it 'assigns requested answer to @answer' do
-					patch :update, question_id: question.id, id: answer, answer: attributes_for(:answer)
+					xhr :patch, :update, question_id: question, id: answer, answer: attributes_for(:answer)
 					expect(assigns[:answer]).to eq answer
 				end
 
 				it "changes @answer's attributes" do
-					patch :update, question_id: question.id, id: answer, answer: { body: 'New body' }
+					xhr :patch, :update, question_id: question, id: answer, answer: { body: 'New body' }
 					answer.reload
 					expect(answer.body).to eq 'New body'
 				end
 
-				it "redirects to question's page" do
-					patch :update, question_id: question.id, id: answer, answer: attributes_for(:answer)
-					expect(response).to redirect_to question_path(question.id)
+				it 'renders the :update template' do
+					xhr :patch, :update, question_id: question, id: answer, answer: attributes_for(:answer)
+					expect(response).to render_template :update
 				end
 			end
 
 			context 'with invalid attributes' do
 				let(:answer) { create(:answer, question: question, body: 'Some old answer') }
 
-				before { patch :update, question_id: question.id, id: answer, answer: { body: nil } }
+				before { xhr :patch, :update, question_id: question, id: answer, answer: { body: nil } }
 
 				it "does not change @answer's attributes" do
 					answer.reload
@@ -106,12 +124,12 @@ RSpec.describe AnswersController, :type => :controller do
 			before { answer }
 
 			it 'deletes the answer from the database' do
-				expect { delete :destroy, question_id: question.id, id: answer }.to change(Answer, :count).by(-1)
+				expect { delete :destroy, question_id: question, id: answer }.to change(Answer, :count).by(-1)
 			end
 
 			it 'redirects to question#show' do
-				delete :destroy, question_id: question.id, id: answer
-				expect(response).to redirect_to question_path(question.id)
+				delete :destroy, question_id: question, id: answer
+				expect(response).to redirect_to question_path(question)
 			end
 		end
 	end
@@ -128,31 +146,31 @@ RSpec.describe AnswersController, :type => :controller do
 	context 'guest access to answers' do
 		describe 'GET #new' do
 			it 'requires login' do
-				get :new, question_id: question.id
+				get :new, question_id: question
 			end
 		end
 
 		describe 'POST #create' do
 			it 'requires login' do
-				post :create, question_id: question.id, answer: attributes_for(:answer)
+				post :create, question_id: question, answer: attributes_for(:answer)
 			end
 		end
 
 		describe 'GET #edit' do
 			it 'requires login' do
-				get :edit, question_id: question.id, id: answer
+				get :edit, question_id: question, id: answer
 			end
 		end
 
 		describe 'PATCH #update' do
 			it 'requires login' do
-				patch :update, question_id: question.id, id: answer, answer: attributes_for(:answer)
+				patch :update, question_id: question, id: answer, answer: attributes_for(:answer)
 			end
 		end
 
 		describe 'DELETE #destroy' do
 			it 'requires login' do
-				delete :destroy, question_id: question.id, id: answer
+				delete :destroy, question_id: question, id: answer
 			end
 		end
 

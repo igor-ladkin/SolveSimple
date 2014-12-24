@@ -1,0 +1,10 @@
+$('#formModal').modal('toggle');
+
+if( $('.alert-info').length ){
+	$('.alert-info').html('Your question was successfully updated.');
+} else {
+	$('#main').prepend('<div class="alert alert-info">Your question was successfully updated.</div>');
+}
+
+$('.question h1').html('<%= j "#{@question.title}" %>');
+$('.question p.lead').html('<%= j "#{@question.body}" %>');

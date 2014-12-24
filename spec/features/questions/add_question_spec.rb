@@ -12,7 +12,7 @@ feature 'Add question', %q{
 			sign_in(user)
 
 			visit questions_path
-			click_on 'Ask question'
+			click_on 'Ask Question'
 			fill_in 'Title', with: 'Testing question.'
 			fill_in 'Body', with: 'Can you give a simple answer?'
 			click_on 'Create Question'
@@ -25,7 +25,7 @@ feature 'Add question', %q{
 			sign_in user
 
 			visit questions_path
-			click_on 'Ask question'
+			click_on 'Ask Question'
 			fill_in 'Title', with: nil
 			fill_in 'Body', with: 'Can you give a simple answer?'
 			click_on 'Create Question'
@@ -38,7 +38,7 @@ feature 'Add question', %q{
 		scenario 'add a new question' do
 			visit questions_path
 
-			expect(page).not_to have_link 'Ask question'
+			expect(page).not_to have_link 'Ask Question'
 		end
 	end
 end

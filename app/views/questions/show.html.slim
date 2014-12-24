@@ -5,15 +5,18 @@
 				= @question.title
 			p.lead
 				= @question.body
-			.text-left class='col-sm-6'
-				= link_to 'Answer', new_question_answer_path(@question), :class => 'btn btn-success'
-			.text-right	class='col-sm-6'
-				.question-controls			
-					.btn-group role='group' aria-label='buttons for managing question'
-						= link_to 'Back', questions_path, :class => 'btn btn-default'	
-						= link_to 'Edit', edit_question_path(@question), :class => 'btn btn-default'
-						= link_to 'Delete', @question, :method => :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-default'
-		- unless @answers.empty?
-			hr
-			ul.list-group class='answers'
-				= render @answers
+			.text-right	class='col-sm-6 col-sm-offset-6'
+				- if user_signed_in?
+					.question-controls
+						.btn-group role='group' aria-label='buttons for managing question'
+							= link_to 'Back', questions_path, class: 'btn btn-default'	
+							= link_to 'Edit', edit_question_path(@question), remote: true, class: 'btn btn-default',
+								data: { toggle: 'modal', target: '#formModal' }
+							= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-default'
+		- if user_signed_in?
+			.text-center
+				= link_to 'Add Answer', new_question_answer_path(@question), remote: true, class: 'btn btn-success btn-lg',
+					data: { toggle: 'modal', target: '#formModal' }
+		hr
+		ul.list-group class='answers'
+			= render 'questions/answers'

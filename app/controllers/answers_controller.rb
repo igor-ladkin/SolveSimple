@@ -5,26 +5,39 @@ class AnswersController < ApplicationController
 
 	def new
 		@answer = Answer.new
+
+		respond_to do |format|
+			format.html { redirect_to @question }
+			format.js
+		end
 	end
 
 	def edit
+		respond_to do |format|
+			format.html { redirect_to @question }
+			format.js
+		end
 	end
 
 	def create
 		@answer = @question.answers.new(answer_params.merge(user: current_user))
 
-		if @answer.save
-			redirect_to @question, notice: 'Your answer was successfully created.'
-		else
-			render :new
+		respond_to do |format|
+			if @answer.save
+				format.js
+			else
+				format.js { render :new }
+			end
 		end
 	end
 
 	def update
-		if @answer.update(answer_params)
-			redirect_to @question
-		else
-			render :edit
+		respond_to do |format|
+			if @answer.update(answer_params)
+				format.js
+			else
+				format.js { render :edit }
+			end
 		end
 	end
 

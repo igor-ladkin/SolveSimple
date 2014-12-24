@@ -9,30 +9,40 @@ feature 'Editing an answer', %q{
 	given!(:question) { create(:question) }
 	given!(:answer) { create(:answer, question: question) }
 
-	scenario 'with a new valid content' do
-		sign_in user
+	context 'Authenticated user tries to' do
+		scenario 'edit the question with a new valid content', js: true do
+			sign_in user
 
-		visit question_path(question.id)
-		within find('.answer', text: answer.body) do
-			click_on 'Edit'
+			visit question_path(question)
+			within find('.answer', text: answer.body) do
+				click_on 'Edit'
+			end
+			fill_in 'Body', with: "I've changed my mind."
+			click_on 'Update Answer'
+
+			expect(page).to have_content "I've changed my mind."
+			expect(current_path).to eq question_path(question.id)
 		end
-		fill_in 'Body', with: "I've changed my mind."
-		click_on 'Update Answer'
 
-		expect(page).to have_content "I've changed my mind."
-		expect(current_path).to eq question_path(question.id)
+		scenario 'edit the question with an invalid new content', js: true do
+			sign_in user
+
+			visit question_path(question)
+			within find('.answer', text: answer.body) do
+				click_on 'Edit'
+			end
+			fill_in 'Body', with: nil
+			click_on 'Update Answer'
+
+			expect(page).to have_content "can't be blank"
+		end
 	end
 
-	scenario 'with an invalid new content' do
-		sign_in user
+	context 'Non-authenticated user tries to' do
+		scenario 'edit the answer' do
+			visit question_path(question)
 
-		visit question_path(question.id)
-		within find('.answer', text: answer.body) do
-			click_on 'Edit'
+			expect(page).to_not have_selector('.answer-controls')
 		end
-		fill_in 'Body', with: nil
-		click_on 'Update Answer'
-
-		expect(page).to have_content "can't be blank"
 	end
 end

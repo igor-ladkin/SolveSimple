@@ -30,10 +30,6 @@ RSpec.describe QuestionsController, :type => :controller do
 			expect(assigns(:question)).to eq question
 		end
 
-		it 'populates an array of all answers to this question' do
-			expect(assigns(:answers)).to match_array question.answers
-		end
-
 		it 'renders the :show template' do
 			expect(response).to render_template :show
 		end
@@ -64,15 +60,24 @@ RSpec.describe QuestionsController, :type => :controller do
 
 	describe 'GET #edit' do
 		sign_in_user
-		
-		before { get :edit, id: question }
 
-		it 'assigns requested question to @question' do
-			expect(assigns(:question)).to eq question
+		context 'with AJAX request' do
+			before { xhr :get, :edit, id: question }
+
+			it 'assigns requested question to @question' do
+				expect(assigns(:question)).to eq question
+			end
+
+			it 'renders the :edit template' do
+				expect(response).to render_template :edit
+			end
 		end
 
-		it 'renders the :edit template' do
-			expect(response).to render_template :edit
+		context 'with HTTP request' do
+			it 'redirects to question path' do
+				get :edit, id: question
+				expect(response).to redirect_to(question_path(question))
+			end
 		end
 	end
 
@@ -94,6 +99,7 @@ RSpec.describe QuestionsController, :type => :controller do
 			it 'does not save the new question in the database' do
 				expect { xhr :post, :create, question: attributes_for(:invalid_question) }.to_not change(Question, :count)
 			end
+
 			it 're-renders the :new template' do
 				xhr :post, :create, question: attributes_for(:invalid_question)
 				expect(response).to render_template :new
@@ -106,27 +112,27 @@ RSpec.describe QuestionsController, :type => :controller do
 
 		context 'with valid attributes' do
 			it 'assigns requested question to @question' do
-				patch :update, id: question, question: attributes_for(:question)
+				xhr :patch, :update, id: question, question: attributes_for(:question)
 				expect(assigns(:question)).to eq question
 			end
 
 			it "changes @question's attributes" do
-				patch :update, id: question, question: { title: 'New Title', body: 'New body' }
+				xhr :patch, :update, id: question, question: { title: 'New Title', body: 'New body' }
 				question.reload
 				expect(question.title).to eq 'New Title'
 				expect(question.body).to eq 'New body'
 			end
 
-			it 'redirects to updated question' do
-				patch :update, id: question, question: attributes_for(:question)
-				expect(response).to redirect_to question
+			it 'renders the :update template' do
+				xhr :patch, :update, id: question, question: attributes_for(:question)
+				expect(response).to render_template :update
 			end
 		end
 
 		context 'with invalid attributes' do
 			let(:question) { create(:question, body: 'Some old body') }
 
-			before { patch :update, id: question, question: { title: 'New Title', body: nil } }
+			before { xhr :patch, :update, id: question, question: { title: 'New Title', body: nil } }
 
 			it "does not change @question's attributes" do
 				question.reload
