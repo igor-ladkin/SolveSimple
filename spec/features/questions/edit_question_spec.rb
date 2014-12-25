@@ -5,12 +5,13 @@ feature 'Editing a question', %q{
 	As a user
 	I want to change question's title and body
 } do
+	given!(:author) { create(:user) }
 	given!(:user) { create(:user) }
-	given!(:question) { create(:question) }
+	given!(:question) { create(:question, user: author) }
 
-	context 'Authenticated user tries to' do
-		scenario 'edit the question with valid parameters', js: true do
-			sign_in user
+	context 'Author tries to' do
+		scenario 'edit his question with valid parameters', js: true do
+			sign_in author
 
 			visit question_path(question)
 			within('.question-controls') do
@@ -24,8 +25,8 @@ feature 'Editing a question', %q{
 			expect(current_path).to eq question_path(question)
 		end
 
-		scenario 'edit the question with invalid parameters', js: true do
-			sign_in user
+		scenario 'edit his question with invalid parameters', js: true do
+			sign_in author
 
 			visit question_path(question)
 			within('.question-controls') do
@@ -39,7 +40,18 @@ feature 'Editing a question', %q{
 		end
 	end
 
-	context 'Non-authenticated user tries to' do
+	context 'User tries to' do
+		scenario 'edit the question from another author', js: true do
+			pending
+			sign_in user
+
+			visit question_path(question)
+
+			expect(page).to_not have_selector('.question-controls')
+		end
+	end
+
+	context 'Guest tries to' do
 		scenario 'edit the question', js: true do
 			visit question_path(question)
 			
