@@ -2,7 +2,7 @@
 	li.list-group-item class='answer'
 		p = answer.body
 		.text-right
-			- if user_signed_in?
+			- if author_of?(answer)
 				.answer-controls
 					.btn-group role='group' aria-label='buttons for managing answer' 
 						= link_to 'Edit', edit_question_answer_path(@question, answer), remote: true, class: 'btn btn-warning btn-xs',

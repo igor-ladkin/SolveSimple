@@ -6,7 +6,7 @@
 			p.lead
 				= @question.body
 			.text-right	class='col-sm-6 col-sm-offset-6'
-				- if user_signed_in?
+				- if author_of?(@question)
 					.question-controls
 						.btn-group role='group' aria-label='buttons for managing question'
 							= link_to 'Back', questions_path, class: 'btn btn-default'	

@@ -5,13 +5,14 @@ feature 'Editing an answer', %q{
 	As a user
 	I want to edit content of answer's body
 } do
+	given!(:author) { create(:user) }
 	given!(:user) { create(:user) }
 	given!(:question) { create(:question) }
-	given!(:answer) { create(:answer, question: question) }
+	given!(:answer) { create(:answer, question: question, user: author) }
 
-	context 'Authenticated user tries to' do
-		scenario 'edit the question with a new valid content', js: true do
-			sign_in user
+	context 'Author tries to' do
+		scenario 'edit his answer with a new valid content', js: true do
+			sign_in author
 
 			visit question_path(question)
 			within find('.answer', text: answer.body) do
@@ -24,8 +25,8 @@ feature 'Editing an answer', %q{
 			expect(current_path).to eq question_path(question.id)
 		end
 
-		scenario 'edit the question with an invalid new content', js: true do
-			sign_in user
+		scenario 'edit his answer with an invalid new content', js: true do
+			sign_in author
 
 			visit question_path(question)
 			within find('.answer', text: answer.body) do
@@ -35,6 +36,17 @@ feature 'Editing an answer', %q{
 			click_on 'Update Answer'
 
 			expect(page).to have_content "can't be blank"
+		end
+	end
+
+	context 'User tries to' do
+		scenario 'edit the answer from another author' do
+			sign_in user
+
+			visit question_path(question)
+			within find('.answer', text: answer.body) do
+				expect(page).to_not have_selector('.answer-controls')
+			end
 		end
 	end
 

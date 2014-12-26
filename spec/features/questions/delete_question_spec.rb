@@ -8,8 +8,8 @@ feature 'Deleting a question', %q{
 	given!(:user) { create(:user) }
 	given!(:question) { create(:question, user: user) }
 
-	context 'Authenticated user tries to' do
-		scenario 'delete a question', js: true do
+	context 'Author tries to' do
+		scenario 'delete his question', js: true do
 			sign_in user
 
 			visit question_path(question)
@@ -19,6 +19,16 @@ feature 'Deleting a question', %q{
 
 			expect(page).to_not have_content(question.body)
 			expect(current_path).to eq questions_path
+		end
+	end
+
+	context 'User tries to' do
+		scenario 'delete a question from another author', js: true do
+			sign_in user
+
+			visit question_path(question)
+
+			expect(page).to_not have_selector('.question-controls')
 		end
 	end
 

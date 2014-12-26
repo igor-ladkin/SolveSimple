@@ -42,7 +42,6 @@ feature 'Editing a question', %q{
 
 	context 'User tries to' do
 		scenario 'edit the question from another author', js: true do
-			pending
 			sign_in user
 
 			visit question_path(question)
