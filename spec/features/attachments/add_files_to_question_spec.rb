@@ -6,7 +6,7 @@ feature 'Attach files to question', %q{
 	I want to attach files
 }, js: true do
 	given!(:author) { create(:user) }
-	given(:question) { build(:question, user: author) }
+	given(:question) { create(:question, user: author) }
 
 	background do
 		sign_in author
