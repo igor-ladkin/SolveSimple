@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
 
 	def new
 		@answer = Answer.new
+		@answer.attachments.build
 
 		respond_to do |format|
 			format.html { redirect_to @question }
@@ -57,6 +58,6 @@ class AnswersController < ApplicationController
 	end
 
 	def answer_params
-		params.require(:answer).permit(:body)
+		params.require(:answer).permit(:body, attachments_attributes: [:file])
 	end
 end

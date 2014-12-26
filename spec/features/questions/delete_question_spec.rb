@@ -5,12 +5,13 @@ feature 'Deleting a question', %q{
 	As a user
 	I want to delete a question
 } do
+	given!(:author) { create(:user) }
 	given!(:user) { create(:user) }
-	given!(:question) { create(:question, user: user) }
+	given!(:question) { create(:question, user: author) }
 
 	context 'Author tries to' do
 		scenario 'delete his question', js: true do
-			sign_in user
+			sign_in author
 
 			visit question_path(question)
 			within('.question-controls') do

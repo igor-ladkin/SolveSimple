@@ -1,6 +1,10 @@
 - @question.answers.order(:created_at).each do |answer|
 	li.list-group-item class='answer'
 		p = answer.body
+		p Attachments:
+		ul
+			- answer.attachments.each do |a|
+				li = link_to a.file.identifier, a.file.url
 		.text-right
 			- if author_of?(answer)
 				.answer-controls
