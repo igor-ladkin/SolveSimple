@@ -11,6 +11,7 @@ class QuestionsController < ApplicationController
 
 	def new
 		@question = Question.new
+		@question.attachments.build
 
 		respond_to do |format|
 			format.html { redirect_to root_path }
@@ -60,6 +61,6 @@ class QuestionsController < ApplicationController
 	end
 
 	def question_params
-		params.require(:question).permit(:title, :body)
+		params.require(:question).permit(:title, :body, attachments_attributes: [:file])
 	end
 end

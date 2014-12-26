@@ -5,6 +5,10 @@
 				= @question.title
 			p.lead
 				= @question.body
+			p Attachments:
+			ul
+				- @question.attachments.each do |a|
+					li = link_to a.file.identifier, a.file.url
 			.text-right	class='col-sm-6 col-sm-offset-6'
 				- if author_of?(@question)
 					.question-controls
