@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe QuestionsController, :type => :controller do
-	let!(:user) { create(:user) }	
-	let(:question) { create(:question, user: user) }
+RSpec.describe QuestionsController, :type => :controller do	
+	let(:question) { create(:question, user: @user) }
 
 	describe 'GET #index' do
 		let(:questions) { create_list(:question, 2) }
@@ -134,7 +133,7 @@ RSpec.describe QuestionsController, :type => :controller do
 		end
 
 		context 'with invalid attributes' do
-			let(:question) { create(:question, body: 'Some old body') }
+			let(:question) { create(:question, body: 'Some old body', user: @user) }
 
 			before { xhr :patch, :update, id: question, question: { title: 'New Title', body: nil } }
 

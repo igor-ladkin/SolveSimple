@@ -107,7 +107,7 @@ RSpec.describe AnswersController, :type => :controller do
 			end
 
 			context 'with invalid attributes' do
-				let(:answer) { create(:answer, question: question, body: 'Some old answer') }
+				let(:answer) { create(:answer, question: question, body: 'Some old answer', user: @user) }
 
 				before { xhr :patch, :update, question_id: question, id: answer, answer: { body: nil } }
 
