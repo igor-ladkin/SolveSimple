@@ -9,7 +9,7 @@ feature 'Add question', %q{
 
 	context 'Authenticated user tries to' do
 		scenario 'add a new question', js: true do
-			sign_in(user)
+			sign_in user
 
 			visit questions_path
 			click_on 'Ask Question'
@@ -19,6 +19,22 @@ feature 'Add question', %q{
 
 			expect(page).to have_content 'Your question was successfully created.'
 			expect(page).to have_content 'Can you give a simple answer?'
+		end
+
+		scenario 'add a new question with tags', js: true do
+			sign_in user
+
+			visit questions_path
+			click_on 'Ask Question'
+			fill_in 'Title', with: 'Testing tags.'
+			fill_in 'Body', with: 'Ok lets try adding tags.'
+			fill_in 'Tags', with: 'pizza hut'
+			click_on 'Create Question'
+
+			within('#question #tags') do
+				expect(page).to have_content 'pizza'
+				expect(page).to have_content 'hut'
+			end
 		end
 
 		scenario 'add an invalid new question', js: true do

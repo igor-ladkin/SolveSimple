@@ -1,6 +1,7 @@
 = simple_form_for @question, remote: true, html: { role: 'form' } do |f|
 	= f.input :title
 	= f.input :body, input_html: { rows: 4 }
+	= f.input :tag_names, label: 'Tags'
 	p Attachments:
 	= f.simple_fields_for :attachments do |a|
 		= a.input :file

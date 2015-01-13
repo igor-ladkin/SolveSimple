@@ -6,5 +6,5 @@ if( $('.alert-info').length ){
 	$('#main').prepend('<div class="alert alert-info">Your question was successfully updated.</div>');
 }
 
-$('.question h1').html('<%= j "#{@question.title}" %>');
-$('.question p.lead').html('<%= j "#{@question.body}" %>');
+$('#question h1').html('<%= j "#{@question.title}" %>');
+$('#question p.lead').html('<%= j "#{@question.body}" %>');

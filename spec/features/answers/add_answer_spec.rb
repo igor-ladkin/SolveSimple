@@ -18,7 +18,7 @@ feature 'Add answer', %q{
 			click_on 'Create Answer'
 
 			expect(page).to have_content 'Your answer was successfully created.'
-			within '.answers' do
+			within '#answers' do
 				expect(page).to have_content 'In my opinion this is not relevant.'
 			end
 			expect(current_path).to eq question_path(question.id)

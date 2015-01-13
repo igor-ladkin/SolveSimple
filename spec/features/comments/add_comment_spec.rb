@@ -14,7 +14,7 @@ feature 'Add comment', %q{
 			sign_in(user)
 
 			visit question_path(question)
-			within('.question') do
+			within('#question') do
 				click_on 'Leave Comment'
 			end
 			
