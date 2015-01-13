@@ -9,7 +9,11 @@
 			ul
 				- @question.attachments.each do |a|
 					li = link_to a.file.identifier, a.file.url
-			.text-right	class='col-sm-6 col-sm-offset-6'
+			.text-left class='col-sm-6'
+				- if user_signed_in?
+					= link_to 'Leave Comment', new_question_comment_path(@question), remote: true, class: 'btn btn-primary',
+						data: { toggle: 'modal', target: '#formModal' }
+			.text-right	class='col-sm-6'
 				- if author_of?(@question)
 					.question-controls
 						.btn-group role='group' aria-label='buttons for managing question'

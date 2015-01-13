@@ -1,7 +1,18 @@
 Rails.application.routes.draw do
-  resources :questions do
-    resources :answers, except: [:index, :show]
+  concern :commentable do
+    resources :comments, except: [:index, :show]
   end
+
+  resources :questions, concerns: :commentable, shallow: true do
+    resources :answers, except: [:index, :show], concerns: :commentable
+  end
+
+  #resources :questions, shallow: true do
+    #resources :comments, except: [:index, :show], module: :questions
+    #resources :answers, except: [:index, :show] do
+      #resources :comments, except: [:index, :show], module: :answers
+    #end
+  #end
 
   devise_for :users
 

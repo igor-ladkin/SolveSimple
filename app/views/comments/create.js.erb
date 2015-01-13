@@ -1,0 +1,7 @@
+$('#formModal').modal('toggle');
+
+if( $('.alert-info').length ){
+	$('.alert-info').html('Your comment was successfully created.');
+} else {
+	$('#main').prepend('<div class="alert alert-info">Your comment was successfully created.</div>');
+}
