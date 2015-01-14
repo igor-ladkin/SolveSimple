@@ -28,7 +28,6 @@ class AnswersController < ApplicationController
 
 		respond_to do |format|
 			if @answer.save
-				flash[:notice] = 'Your answer was successfully posted.'
 				format.js
 			else
 				format.js { render :new }

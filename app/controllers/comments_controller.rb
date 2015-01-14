@@ -16,7 +16,6 @@ class CommentsController < ApplicationController
 		
 		respond_to do |format|
 			if @comment.save
-				flash[:notice] = 'Your comment was successfully posted.'
 				format.js
 			else
 				format.js { render :new }

@@ -19,7 +19,7 @@ feature 'Editing a question', %q{
 			end
 			fill_in 'Title', with: 'Wait!'
 			fill_in 'Body', with: "I've changed my mind."
-			click_on 'Update Question'
+			click_on 'Update question'
 
 			expect(page).to have_content 'Wait!'
 			expect(current_path).to eq question_path(question)
@@ -34,7 +34,7 @@ feature 'Editing a question', %q{
 			end
 			fill_in 'Title', with: nil
 			fill_in 'Body', with: "I've changed my mind."
-			click_on 'Update Question'
+			click_on 'Update question'
 
 			expect(page).to have_content "can't be blank"
 		end

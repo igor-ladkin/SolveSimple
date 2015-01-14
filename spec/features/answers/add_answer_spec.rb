@@ -13,9 +13,9 @@ feature 'Add answer', %q{
 			sign_in user
 
 			visit question_path(question)
-			click_on 'Add Answer'
+			click_on 'Add answer'
 			fill_in 'Body', with: 'In my opinion this is not relevant.'
-			click_on 'Create Answer'
+			click_on 'Create answer'
 
 			expect(page).to have_content 'Your answer was successfully created.'
 			within '#answers' do
@@ -28,9 +28,9 @@ feature 'Add answer', %q{
 			sign_in user
 			
 			visit question_path(question)
-			click_on 'Add Answer'
+			click_on 'Add answer'
 			fill_in 'Body', with: nil
-			click_on 'Create Answer'
+			click_on 'Create answer'
 
 			expect(page).to have_content "can't be blank"
 		end
@@ -40,7 +40,7 @@ feature 'Add answer', %q{
 		scenario 'add a new answer' do
 			visit question_path(question)
 
-			expect(page).not_to have_link 'Add Answer'
+			expect(page).not_to have_link 'Add answer'
 		end
 	end
 end

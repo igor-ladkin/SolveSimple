@@ -19,7 +19,7 @@ feature 'Editing an answer', %q{
 				click_on 'Edit'
 			end
 			fill_in 'Body', with: "I've changed my mind."
-			click_on 'Update Answer'
+			click_on 'Update answer'
 
 			expect(page).to have_content "I've changed my mind."
 			expect(current_path).to eq question_path(question.id)
@@ -33,7 +33,7 @@ feature 'Editing an answer', %q{
 				click_on 'Edit'
 			end
 			fill_in 'Body', with: nil
-			click_on 'Update Answer'
+			click_on 'Update answer'
 
 			expect(page).to have_content "can't be blank"
 		end

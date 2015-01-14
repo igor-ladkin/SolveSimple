@@ -14,7 +14,7 @@ feature 'Deleting an answer', %q{
 			sign_in user
 
 			visit question_path(question)
-			within find('li', text: answer.body) do
+			within find('.answer', text: answer.body) do
 				click_on 'Delete'
 			end
 

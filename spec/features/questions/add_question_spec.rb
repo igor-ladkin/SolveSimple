@@ -12,10 +12,10 @@ feature 'Add question', %q{
 			sign_in user
 
 			visit questions_path
-			click_on 'Ask Question'
+			click_on 'Ask question'
 			fill_in 'Title', with: 'Testing question.'
 			fill_in 'Body', with: 'Can you give a simple answer?'
-			click_on 'Create Question'
+			click_on 'Create question'
 
 			expect(page).to have_content 'Your question was successfully created.'
 			expect(page).to have_content 'Can you give a simple answer?'
@@ -25,11 +25,11 @@ feature 'Add question', %q{
 			sign_in user
 
 			visit questions_path
-			click_on 'Ask Question'
+			click_on 'Ask question'
 			fill_in 'Title', with: 'Testing tags.'
 			fill_in 'Body', with: 'Ok lets try adding tags.'
 			fill_in 'Tags', with: 'pizza hut'
-			click_on 'Create Question'
+			click_on 'Create question'
 
 			within('#question #tags') do
 				expect(page).to have_content 'pizza'
@@ -41,10 +41,10 @@ feature 'Add question', %q{
 			sign_in user
 
 			visit questions_path
-			click_on 'Ask Question'
+			click_on 'Ask question'
 			fill_in 'Title', with: nil
 			fill_in 'Body', with: 'Can you give a simple answer?'
-			click_on 'Create Question'
+			click_on 'Create question'
 
 			expect(page).to have_content "can't be blank"
 		end
@@ -54,7 +54,7 @@ feature 'Add question', %q{
 		scenario 'add a new question' do
 			visit questions_path
 
-			expect(page).not_to have_link 'Ask Question'
+			expect(page).not_to have_link 'Ask question'
 		end
 	end
 end

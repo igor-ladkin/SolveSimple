@@ -15,11 +15,11 @@ feature 'Add comment', %q{
 
 			visit question_path(question)
 			within('#question') do
-				click_on 'Leave Comment'
+				click_on 'Leave comment'
 			end
 			
-			fill_in 'Body', with: 'My first comment'
-			click_on 'Create Comment'
+			fill_in 'Body', with: 'My first comment.'
+			click_on 'Create comment'
 
 			expect(page).to have_content 'Your comment was successfully created.'
 			expect(page).to have_content 'My first comment.'

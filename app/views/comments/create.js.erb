@@ -5,3 +5,7 @@ if( $('.alert-info').length ){
 } else {
 	$('#main').prepend('<div class="alert alert-info">Your comment was successfully created.</div>');
 }
+if( $('#question-comments').length === 0 ){
+	$('#question').after('<div class="row"><div id="question-comments" class="comments well well-sm"></div></div>');
+} 
+$('#question-comments').html('<%= j render "comments/comments", commentable: @commentable %>');

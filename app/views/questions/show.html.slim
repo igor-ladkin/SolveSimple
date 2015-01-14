@@ -1,38 +1,44 @@
 .row
-	.col-sm-10 class='col-sm-offset-1 text-center'
-		#question class='jumbotron'
-			h1
-				= @question.title
-			p.lead
-				= @question.body
-			.row
-				#tags class='col-sm-6'
-					p Tags:
-					= render @question.tags
-				#attachments class='col-sm-6'
-					p Attachments:
-					ul
-						- @question.attachments.each do |a|
-							li = link_to a.file.identifier, a.file.url
-			.row
-				.text-left class='col-sm-6'
+	.col-sm-10 class='col-sm-offset-1'
+		article#question class='row'
+			.h1
+				= link_to @question.title, @question
+			hr
+			
+			= render 'votes/vote'
+
+			.col-sm-10
+				p.lead
+					= @question.body
+				- unless @question.tags.empty?
+					#tags class='col-sm-6'
+						= render @question.tags
+				- unless @question.attachments.empty? 
+					.attachments class='col-sm-6 text-right'
+						= render @question.attachments
+			.col-sm-10 class='col-sm-offset-2 controls'
+				.col-sm-6
 					- if user_signed_in?
-						= link_to 'Leave Comment', new_question_comment_path(@question), remote: true,
+						= link_to 'Leave comment', new_question_comment_path(@question), remote: true,
 							data: { toggle: 'modal', target: '#formModal' }
 				.text-right	class='col-sm-6'
 					- if author_of?(@question)
 						.question-controls
-							.btn-group role='group' aria-label='buttons for managing question'
-								= link_to 'Back', questions_path
-								|&nbsp; 	
-								= link_to 'Edit', edit_question_path(@question), remote: true,
-									data: { toggle: 'modal', target: '#formModal' }
-								|&nbsp; 
-								= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' }
+							= link_to 'Back', questions_path
+							|&nbsp;
+							= link_to 'Edit', edit_question_path(@question), remote: true,
+								data: { toggle: 'modal', target: '#formModal' }
+							|&nbsp;
+							= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' }
+		- unless @question.comments.empty?
+			.row
+				#question-comments class='comments well well-sm'
+					= render 'comments/comments', commentable: @question
 		- if user_signed_in?
 			.text-center
-				= link_to 'Add Answer', new_question_answer_path(@question), remote: true, class: 'btn btn-success btn-lg',
+				= link_to 'Add answer', new_question_answer_path(@question), remote: true, class: 'btn btn-primary btn-lg',
 					data: { toggle: 'modal', target: '#formModal' }
-		hr
-		ul#answers class='list-group'
+		.row
+			hr
+		#answers 
 			= render 'questions/answers'

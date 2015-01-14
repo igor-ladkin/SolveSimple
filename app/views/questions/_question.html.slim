@@ -1,5 +1,17 @@
-= link_to question, :class => 'list-group-item'
-	h4.list-group-item-heading
-		= question.title
-	p.list-group-item-text
-		= question.body
+.row
+	.col-sm-2 class='question-ratings'
+		.col-sm-6 class='given_votes text-center'
+			span.h3 0
+			br
+			p votes
+		.col-sm-6 class='given_answers text-center'	
+			span.h3 0 
+			br
+			p answers
+		
+	.col-sm-10
+		= link_to question.title, question, class: 'h3'
+		- unless question.tags.empty?
+			.tags
+				= render question.tags
+hr
