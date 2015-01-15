@@ -1,0 +1,4 @@
+= simple_form_for @comment, remote: true, html: { role: 'form' } do |f|
+	= f.input :body, input_html: { rows: 4 }
+	.text-center
+		= f.button :submit, 'Update comment', class: 'btn btn-success'

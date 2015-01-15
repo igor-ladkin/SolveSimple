@@ -8,3 +8,4 @@ if( $('.alert-info').length ){
 
 $('#question .h1 a').html('<%= j "#{@question.title}" %>');
 $('#question p.lead').html('<%= j "#{@question.body}" %>');
+$('#tags').html('<%= j render @question.tags %>')

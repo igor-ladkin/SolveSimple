@@ -1,4 +1,13 @@
 - commentable.comments.each do |comment|
-		p.comment = comment.body
+		.comment class='col-sm-12'
+			.comment-body class='col-sm-11'
+				= comment.body
+			- if author_of?(comment)
+				.comment-controls class='col-sm-1 text-center'
+					= link_to edit_comment_path(comment), remote: true, data: { toggle: 'modal', target: '#formModal' } do
+						i.fa class='fa-paint-brush'
+					|&nbsp;
+					= link_to comment, method: :delete do
+						i.fa class='fa-trash'
 p.text-center
 	= link_to 'Hide comments', '#'

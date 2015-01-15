@@ -5,6 +5,7 @@ class Question < ActiveRecord::Base
 	has_many :attachments, as: :attachmentable, dependent: :destroy
 	has_and_belongs_to_many :tags
 	before_create :associate_tags
+	before_update :associate_tags
 
 	attr_accessor :tag_names
 

@@ -66,7 +66,7 @@ RSpec.describe AnswersController, :type => :controller do
 			sign_in_user
 
 			context 'with AJAX request' do
-				before { xhr :get, :edit, question_id: question, id: answer }
+				before { xhr :get, :edit, id: answer }
 
 				it 'assigns requested answer to @answer' do
 					expect(assigns[:answer]).to eq answer
@@ -90,18 +90,18 @@ RSpec.describe AnswersController, :type => :controller do
 
 			context 'with valid attributes' do
 				it 'assigns requested answer to @answer' do
-					xhr :patch, :update, question_id: question, id: answer, answer: attributes_for(:answer)
+					xhr :patch, :update, id: answer, answer: attributes_for(:answer)
 					expect(assigns[:answer]).to eq answer
 				end
 
 				it "changes @answer's attributes" do
-					xhr :patch, :update, question_id: question, id: answer, answer: { body: 'New body' }
+					xhr :patch, :update, id: answer, answer: { body: 'New body' }
 					answer.reload
 					expect(answer.body).to eq 'New body'
 				end
 
 				it 'renders the :update template' do
-					xhr :patch, :update, question_id: question, id: answer, answer: attributes_for(:answer)
+					xhr :patch, :update, id: answer, answer: attributes_for(:answer)
 					expect(response).to render_template :update
 				end
 			end
@@ -109,7 +109,7 @@ RSpec.describe AnswersController, :type => :controller do
 			context 'with invalid attributes' do
 				let(:answer) { create(:answer, question: question, body: 'Some old answer', user: @user) }
 
-				before { xhr :patch, :update, question_id: question, id: answer, answer: { body: nil } }
+				before { xhr :patch, :update, id: answer, answer: { body: nil } }
 
 				it "does not change @answer's attributes" do
 					answer.reload
@@ -128,11 +128,11 @@ RSpec.describe AnswersController, :type => :controller do
 			before { answer }
 
 			it 'deletes the answer from the database' do
-				expect { delete :destroy, question_id: question, id: answer }.to change(Answer, :count).by(-1)
+				expect { delete :destroy, id: answer }.to change(Answer, :count).by(-1)
 			end
 
 			it 'redirects to question#show' do
-				delete :destroy, question_id: question, id: answer
+				delete :destroy, id: answer
 				expect(response).to redirect_to question_path(question)
 			end
 		end
