@@ -42,3 +42,5 @@
 			hr
 		#answers 
 			= render 'questions/answers'
+
+= subscribe_to "/questions/#{@question.id}/answers"

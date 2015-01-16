@@ -33,7 +33,10 @@ class QuestionsController < ApplicationController
 		respond_to do |format|
 			if @question.save
 				flash[:notice] = 'Your question was successfully created.'
-				format.js
+				format.js do
+					PrivatePub.publish_to '/questions', questions: Question.order(created_at: :desc).to_json
+					render :create
+				end
 			else
 				format.js { render :new }
 			end

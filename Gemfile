@@ -33,6 +33,8 @@ gem 'spring',        group: :development
 gem 'devise', '~> 3.4.1'
 gem 'carrierwave', '~> 0.10.0'
 gem 'remotipart', '~> 1.2'
+gem 'private_pub', '~> 1.0.3'
+gem 'thin', '~> 1.6.3'
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1.0'

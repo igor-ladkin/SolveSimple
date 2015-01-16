@@ -7,3 +7,7 @@ if( $('.alert-info').length ){
 }
 
 $('#answers').html('<%= j render "questions/answers" %>')
+
+<% publish_to "/questions/#{@question.id}/answers" do %>
+	$('#answers').html('<%= j render "questions/answers" %>')
+<% end %>
