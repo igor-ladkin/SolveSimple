@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     #end
   #end
 
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   root to: 'questions#index' 
   # The priority is based upon order of creation: first created -> highest priority.
