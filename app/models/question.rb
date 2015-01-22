@@ -4,14 +4,13 @@ class Question < ActiveRecord::Base
 	has_many :comments, as: :commentable, dependent: :destroy
 	has_many :attachments, as: :attachmentable, dependent: :destroy
 	has_and_belongs_to_many :tags
-	before_create :associate_tags
-	before_update :associate_tags
+	before_save :associate_tags
 
 	attr_accessor :tag_names
 
 	validates :title, :body, presence: true
 
-	accepts_nested_attributes_for :attachments
+	accepts_nested_attributes_for :attachments, allow_destroy: true
 
 	private
 

@@ -1,6 +1,6 @@
 .row
 	.col-sm-10 class='col-sm-offset-1'
-		article#question class='row'
+		article#question class='row' data-commentable="question-#{@question.id}"
 			.h1
 				= link_to @question.title, @question
 			hr
@@ -32,7 +32,7 @@
 							= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' }
 		- unless @question.comments.empty?
 			.row
-				#question-comments class='comments well well-sm'
+				.comments id="question-#{@question.id}-comments" class='well well-sm'
 					= render 'comments/comments', commentable: @question
 		- if user_signed_in?
 			.text-center
@@ -43,4 +43,4 @@
 		#answers 
 			= render 'questions/answers'
 
-= subscribe_to "/questions/#{@question.id}/answers"
+= render 'questions/subscriptions'

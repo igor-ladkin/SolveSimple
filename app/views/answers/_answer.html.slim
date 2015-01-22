@@ -1,4 +1,4 @@
-.answer class='row'
+.answer class='row' data-commentable="answer-#{answer.id}"
 	= render 'votes/vote'
 
 	.col-sm-10
@@ -20,24 +20,6 @@
 					= link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }
 	- unless answer.comments.empty?
 		.col-sm-12
-			.comments class='row well well-sm'
+			.comments id="answer-#{answer.id}-comments" class='row well well-sm'
 				= render 'comments/comments', commentable: answer
-		
-
-		/.text-left class='col-sm-6'
-/- unless answer.comments.empty?
-/	.row
-/		.comments class='well well-sm'
-/			= render 'comments/comments', commentable: answer
-/- if user_signed_in?
-/= link_to 'Leave comment', new_answer_comment_path(answer), remote: true,
-/data: { toggle: 'modal', target: '#formModal' }
-/.text-right
-/- if author_of?(answer)
-/.answer-controls
-/.btn-group role='group' aria-label='buttons for managing answer' 
-/= link_to 'Edit', edit_answer_path(answer), remote: true,
-/data: { toggle: 'modal', target: '#formModal' }
-/|&nbsp;
-/= link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }
 		

@@ -12,7 +12,6 @@ class QuestionsController < ApplicationController
 
 	def new
 		@question = Question.new
-		@question.attachments.build
 
 		respond_to do |format|
 			format.html { redirect_to root_path }
@@ -34,8 +33,8 @@ class QuestionsController < ApplicationController
 			if @question.save
 				flash[:notice] = 'Your question was successfully created.'
 				format.js do
-					PrivatePub.publish_to '/questions', questions: Question.order(created_at: :desc).to_json
-					render :create
+					@questions = Question.order(created_at: :desc)
+					#PrivatePub.publish_to '/questions', questions: Question.order(created_at: :desc).to_json
 				end
 			else
 				format.js { render :new }
@@ -72,6 +71,6 @@ class QuestionsController < ApplicationController
 	end
 
 	def question_params
-		params.require(:question).permit(:title, :body, :tag_names, attachments_attributes: [:file])
+		params.require(:question).permit(:title, :body, :tag_names, attachments_attributes: [:id, :file, :_destroy, :file_cache])
 	end
 end

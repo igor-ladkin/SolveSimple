@@ -6,8 +6,6 @@ if( $('.alert-info').length ){
 	$('#main').prepend('<div class="alert alert-info">Your answer was successfully created.</div>');
 }
 
-$('#answers').html('<%= j render "questions/answers" %>')
-
 <% publish_to "/questions/#{@question.id}/answers" do %>
-	$('#answers').html('<%= j render "questions/answers" %>')
+	$('#answers').html('<%= j render "questions/answers" %>');
 <% end %>

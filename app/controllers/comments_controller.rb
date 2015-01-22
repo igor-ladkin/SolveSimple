@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_commentable
+	before_action :set_commentable, only: [:new, :create]
 	before_action :load_comment, only: [:edit, :update, :destroy]
 	before_action :verificate_authorship, only: [:edit, :update, :destroy]
 
@@ -26,17 +26,13 @@ class CommentsController < ApplicationController
 	end
 
 	def edit
-		@commentable = @comment.commentable
-
 		respond_to do |format|
-			format.html { redirect_to @commentable }
+			format.html { redirect_to @comment.commentable }
 			format.js
 		end
 	end
 
 	def update
-		@commentable = @comment.commentable
-
 		respond_to do |format|
 			if @comment.update(comment_params)
 				format.js
@@ -47,10 +43,12 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
-		@commentable = @comment.commentable
-
 		@comment.destroy
-		redirect_to @commentable
+		@record = @comment.commentable
+
+		@record = @record.question if @record.is_a? Answer
+			
+		redirect_to @record
 	end
 
 	protected
@@ -71,11 +69,7 @@ class CommentsController < ApplicationController
 	end
 
 	def set_commentable
-		@commentable = case
-									 when params[:question_id].present?
-									   Question.find(params[:question_id])
-									 when params[:answer_id].present?
-									 	 Answer.find(params[:answer_id])
-									 end
+		resource, id = request.path.split('/')[1, 2]
+    @commentable = resource.singularize.classify.constantize.find(id)
 	end
 end

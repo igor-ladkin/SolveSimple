@@ -5,6 +5,7 @@ feature 'Remove files from question', %q{
 	As an author
 	I want to attach files
 }, js: true do
+	pending
 	given!(:author) { create(:user) }
 	given(:question) { create(:question, user: author) }
 

@@ -6,7 +6,6 @@ class AnswersController < ApplicationController
 
 	def new
 		@answer = Answer.new
-		@answer.attachments.build
 
 		respond_to do |format|
 			format.html { redirect_to @question }
@@ -15,10 +14,8 @@ class AnswersController < ApplicationController
 	end
 
 	def edit
-		@question = @answer.question
-
 		respond_to do |format|
-			format.html { redirect_to @question }
+			format.html { redirect_to @answer.question }
 			format.js
 		end
 	end
@@ -36,8 +33,6 @@ class AnswersController < ApplicationController
 	end
 
 	def update
-		@question = @answer.question
-
 		respond_to do |format|
 			if @answer.update(answer_params)
 				format.js
@@ -48,10 +43,8 @@ class AnswersController < ApplicationController
 	end
 
 	def destroy
-		@question = @answer.question
-
 		@answer.destroy
-		redirect_to @question
+		redirect_to @answer.question
 	end
 
 	protected

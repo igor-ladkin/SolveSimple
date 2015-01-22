@@ -1,1 +1,5 @@
 window.location='<%= j "#{question_path(@question)}" %>'
+
+<% publish_to "/questions" do %>
+	$('#questionsTabs #new').html('<%= j render "questions/questions" %>')
+<% end %>

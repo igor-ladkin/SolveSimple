@@ -9,4 +9,4 @@ if( $('#question-comments').length === 0 ){
 	$('#question').after('<div class="row"><div id="question-comments" class="comments well well-sm"></div></div>');
 }
 
-$('#question-comments').html('<%= j render "comments/comments", commentable: @commentable %>');
+$(<%= "#{@commentable.commentable_type.downcase}-#{@commentable.id}-comments" %>).html('<%= j render "comments/comments", commentable: @commentable %>');

@@ -5,7 +5,14 @@ if( $('.alert-info').length ){
 } else {
 	$('#main').prepend('<div class="alert alert-info">Your comment was successfully created.</div>');
 }
-if( $('#question-comments').length === 0 ){
-	$('#question').after('<div class="row"><div id="question-comments" class="comments well well-sm"></div></div>');
-} 
-$('#question-comments').html('<%= j render "comments/comments", commentable: @commentable %>');
+
+<% publish_to "/#{@comment.commentable_type.downcase.pluralize}/#{@commentable.id}/comments" do %>
+	var selector = '<%= "#{@comment.commentable_type.downcase}-#{@commentable.id}-comments" %>';
+
+	if( $('#' + selector).length === 0 ){
+	$("[data-commentable='<%= j "#{@comment.commentable_type.downcase}-#{@comment.commentable.id}" %>']").
+				after('<div class="row"><div id="' + selector + '" class="comments well well-sm"></div></div>');
+  } 
+
+	$('#' + selector).html('<%= j render "comments/comments", commentable: @comment.commentable %>');
+<% end %>

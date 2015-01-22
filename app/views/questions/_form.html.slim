@@ -1,0 +1,15 @@
+= simple_nested_form_for @question, remote: true, html: { role: 'form' } do |f|
+	= f.input :title
+	= f.input :body, input_html: { rows: 4 }
+	= f.input :tag_names, label: 'Tags'
+	- unless @question.tags.empty?
+		.tags class='col-sm-6'
+			= render @question.tags
+	- unless @question.attachments.empty? 
+		.attachments class='col-sm-6 text-center'
+			= render @question.attachments
+	= f.simple_fields_for :attachments, @question.attachments.build do |a|
+		= a.input :file	
+	p = f.link_to_add 'Add new file', :attachments
+	.text-center
+		= f.button :submit, "#{ @question.new_record? ? 'Create question' : 'Update question' }", class: 'btn btn-success'

@@ -8,13 +8,11 @@ feature 'Attach files to question', %q{
 	given!(:author) { create(:user) }
 	given(:question) { create(:question, user: author) }
 
-	background do
+	scenario 'User adds file when asks question' do
 		sign_in author
 		visit root_path
 		click_on 'Ask question'
-	end
 
-	scenario 'User adds file when asks question' do
 		fill_in 'Title', with: question.title
 		fill_in 'Body', with: question.body
 		attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
