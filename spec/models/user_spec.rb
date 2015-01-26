@@ -6,6 +6,8 @@ RSpec.describe User, :type => :model do
 	it { is_expected.to have_many :questions }
 	it { is_expected.to have_many :answers }
 	it { is_expected.to have_many :comments }
+	it { is_expected.to allow_value('chester@gmail.com').for(:email) }
+	it { is_expected.to_not allow_value('change@me-1-facebook.com').for(:email).on(:update) }
 
 	describe '.find_for_oauth' do
 		let!(:user) { create(:user) }

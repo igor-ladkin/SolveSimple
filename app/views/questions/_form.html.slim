@@ -8,6 +8,8 @@
 	- unless @question.attachments.empty? 
 		.attachments class='col-sm-6 text-center'
 			= render @question.attachments
+	br
+	br
 	= f.simple_fields_for :attachments, @question.attachments.build do |a|
 		= a.input :file	
 	p = f.link_to_add 'Add new file', :attachments

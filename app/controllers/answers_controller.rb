@@ -33,10 +33,13 @@ class AnswersController < ApplicationController
 	end
 
 	def update
+		@question = @answer.question
+
 		respond_to do |format|
 			if @answer.update(answer_params)
 				format.js
 			else
+				@question = nil
 				format.js { render :edit }
 			end
 		end

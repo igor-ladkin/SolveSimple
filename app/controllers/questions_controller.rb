@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
 	before_action :verificate_authorship, only: [:edit, :update, :destroy]
 
 	def index
-		@questions = Question.order(created_at: :desc)
+		@questions = Question.includes(:tags).order(created_at: :desc)
 	end
 
 	def show
