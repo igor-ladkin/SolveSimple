@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
+  skip_authorization_check
+
 	before_action :set_user, only: [:finish_signup]
 
 	def finish_signup
     if request.patch? && params[:user]
       if @user.update(user_params)
-        sign_in(@user, :bypass => true)
-        redirect_to root_path, notice: 'Your profile was successfully updated.'
+        @user.send_reconfirmation_instructions
+        redirect_to root_path, notice: 'Confirmation letter has been sent to you. Please follow insrtuctions to activate your account.'
       else
         @show_errors = true
       end

@@ -5,8 +5,5 @@ if( $('.alert-info').length ){
 } else {
 	$('#main').prepend('<div class="alert alert-info">Your comment was successfully updated.</div>');
 }
-if( $('#question-comments').length === 0 ){
-	$('#question').after('<div class="row"><div id="question-comments" class="comments well well-sm"></div></div>');
-}
 
 $('#<%= j "#{@comment.commentable_type.downcase}-#{@comment.commentable.id}-comments" %>').html('<%= j render "comments/comments", commentable: @comment.commentable %>');

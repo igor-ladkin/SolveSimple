@@ -1,7 +1,8 @@
 class QuestionsController < ApplicationController
 	before_action :authenticate_user!, except: [:index, :show]
 	before_action :load_question, only: [:show, :edit, :update, :destroy]
-	before_action :verificate_authorship, only: [:edit, :update, :destroy]
+
+	authorize_resource
 
 	def index
 		@questions = Question.includes(:tags).order(created_at: :desc)
@@ -56,8 +57,6 @@ class QuestionsController < ApplicationController
 		@question.destroy
 		redirect_to questions_path
 	end
-
-	protected
 
 	def verificate_authorship
 		@record = @question

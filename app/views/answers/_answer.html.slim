@@ -8,11 +8,11 @@
 				= render answer.attachments
 	.col-sm-10 class='col-sm-offset-2 controls'
 		.col-sm-6
-			- if user_signed_in?
+			- if can?(:create, Comment)
 				= link_to 'Leave comment', new_answer_comment_path(answer), remote: true,
 					data: { toggle: 'modal', target: '#formModal' }
 		.text-right	class='col-sm-6'
-			- if author_of?(answer)
+			- if can?(:update, answer, user: current_user)
 				.answern-controls
 					= link_to 'Edit', edit_answer_path(answer), remote: true,
 						data: { toggle: 'modal', target: '#formModal' }

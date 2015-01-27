@@ -2,7 +2,8 @@ class CommentsController < ApplicationController
 	before_action :authenticate_user!
 	before_action :set_commentable, only: [:new, :create]
 	before_action :load_comment, only: [:edit, :update, :destroy]
-	before_action :verificate_authorship, only: [:edit, :update, :destroy]
+
+	authorize_resource
 
 	def new
 		@comment = Comment.new
@@ -49,13 +50,6 @@ class CommentsController < ApplicationController
 		@record = @record.question if @record.is_a? Answer
 			
 		redirect_to @record
-	end
-
-	protected
-
-	def verificate_authorship
-		@record = @comment
-		super
 	end
 
 	private

@@ -2,7 +2,8 @@ class AnswersController < ApplicationController
 	before_action :authenticate_user!
 	before_action :get_question, only: [:new, :create]
 	before_action :load_answer, only: [:edit, :update, :destroy]
-	before_action :verificate_authorship, only: [:edit, :update, :destroy]
+
+	authorize_resource
 
 	def new
 		@answer = Answer.new
@@ -48,13 +49,6 @@ class AnswersController < ApplicationController
 	def destroy
 		@answer.destroy
 		redirect_to @answer.question
-	end
-
-	protected
-
-	def verificate_authorship
-		@record = @answer
-		super
 	end
 
 	private

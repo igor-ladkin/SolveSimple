@@ -18,11 +18,11 @@
 						= render @question.attachments
 			.col-sm-10 class='col-sm-offset-2 controls'
 				.col-sm-6
-					- if user_signed_in?
+					- if can?(:create, Comment)
 						= link_to 'Leave comment', new_question_comment_path(@question), remote: true,
 							data: { toggle: 'modal', target: '#formModal' }
 				.text-right	class='col-sm-6'
-					- if author_of?(@question)
+					- if can?(:update, @question, user: current_user)
 						.question-controls
 							= link_to 'Back', questions_path
 							|&nbsp;
@@ -34,7 +34,7 @@
 			.row
 				.comments id="question-#{@question.id}-comments" class='well well-sm'
 					= render 'comments/comments', commentable: @question
-		- if user_signed_in?
+		- if can?(:create, Answer)
 			.text-center
 				= link_to 'Add answer', new_question_answer_path(@question), remote: true, class: 'btn btn-primary btn-lg',
 					data: { toggle: 'modal', target: '#formModal' }

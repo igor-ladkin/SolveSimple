@@ -2,7 +2,7 @@
 		.comment class='col-sm-12'
 			.comment-body class='col-sm-11'
 				= comment.body
-			- if author_of?(comment)
+			- if can?(:update, comment, user: current_user)
 				.comment-controls class='col-sm-1 text-center'
 					= link_to edit_comment_path(comment), remote: true, data: { toggle: 'modal', target: '#formModal' } do
 						i.fa class='fa-paint-brush'
