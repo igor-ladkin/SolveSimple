@@ -1,8 +1,8 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-	def self.provides_callback_for(provider)
+	def self.providers_callack_for(provider)
 		class_eval %Q{
 			def #{provider}
-				@user = User.find_for_oauth(env['omniauth.auth'], current_user)
+				@user = User.find_for_oauth(env['omniauth.auth'])
 		
 				if @user.persisted?
 					sign_in_and_redirect @user, event: :authentication
@@ -16,7 +16,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	end
 
 	[:facebook, :twitter].each do |provider|
-		provides_callback_for provider
+		providers_callack_for provider
 	end
 
 	def after_sign_in_path_for(user)

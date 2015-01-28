@@ -7,6 +7,7 @@ class UsersController < ApplicationController
     if request.patch? && params[:user]
       if @user.update(user_params)
         @user.send_reconfirmation_instructions
+        sign_out @user
         redirect_to root_path, notice: 'Confirmation letter has been sent to you. Please follow insrtuctions to activate your account.'
       else
         @show_errors = true

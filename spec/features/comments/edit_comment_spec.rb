@@ -25,11 +25,27 @@ feature 'Edit comment', %q{
 			expect(page).to have_content 'Your comment was successfully updated.'
 			expect(page).to have_content 'NOPE!'
 		end
-		scenario 'add a new comment to answer'
-		scenario 'add an invalid comment to question'
-		scenario 'add an invalid comment to answer'
+
+		scenario 'edit his commnet with an invalid data', js: true do
+			sign_in(user)
+
+			visit question_path(question)
+			within find('.comment', text: comment.body) do
+				find('i.fa-paint-brush').click
+			end
+			
+			fill_in 'Body', with: nil
+			click_on 'Update comment'
+
+			expect(page).to have_content "can't be blank"
+		end
 	end
 
 	context 'Non-authenticated user tries to' do
+		scenario 'edit comment' do
+			visit question_path(question)
+
+			expect(page).to_not have_css('i.fa-paint-brush')
+		end
 	end
 end

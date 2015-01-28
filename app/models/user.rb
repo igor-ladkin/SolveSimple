@@ -13,10 +13,10 @@ class User < ActiveRecord::Base
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
 
-  def self.find_for_oauth(auth, signed_in_user = nil)
-  	authorization = Authorization.find_for_oauth(auth)
+  def self.find_for_oauth(auth)
+  	authorization = Authorization.find_or_create_by(uid: auth.uid, provider: auth.provider)
 
-    user = signed_in_user ? signed_in_user : authorization.user
+    user = authorization.user
 
     if user.nil?
       email_is_verified = auth.info.email && ( auth.info.verified || auth.info.verified_email )

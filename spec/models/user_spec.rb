@@ -22,7 +22,7 @@ RSpec.describe User, :type => :model do
 
 		context 'user has no authorization' do
 			context 'but already exists' do
-				let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '12345', info: { email: user.email }) }
+				let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '12345', info: { email: user.email, verified: true }) }
 
 				it 'does not create new user' do
 					expect { User.find_for_oauth(auth) }.to_not change(User, :count)
@@ -45,7 +45,8 @@ RSpec.describe User, :type => :model do
 			end
 
 			context 'and does not exist' do
-				let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '12345', info: { email: 'new@user.com' }) }
+				let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '12345', info: { email: 'new@user.com', verified: true }) }
+				let(:twitter) { OmniAuth::AuthHash.new(provider: 'twitter', uid: '12345', info: {}) }
 
 				it 'creates new user' do
 					expect { User.find_for_oauth(auth) }.to change(User, :count).by(1)
@@ -55,9 +56,19 @@ RSpec.describe User, :type => :model do
 					expect(User.find_for_oauth(auth)).to be_a(User)
 				end
 
-				it "fills user's email" do
+				it "fills user's email if email is provided" do
 					user = User.find_for_oauth(auth)
 					expect(user.email).to eq auth.info[:email]
+				end
+
+				it "generates user's email if email is not provided" do
+					user = User.find_for_oauth(twitter)
+					expect(user.email).to include "twitter.com"
+				end
+
+				it "generates user's email if email is provided but not verified" do
+					user = User.find_for_oauth(twitter)
+					expect(user.email).to include "twitter.com"
 				end
 
 				it 'creates authorization for user' do
