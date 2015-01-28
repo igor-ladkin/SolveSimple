@@ -40,6 +40,7 @@ gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-facebook', '~> 2.0.0'
 gem 'omniauth-twitter', '~> 1.1.0'
 gem 'cancancan', '~> 1.10.1'
+gem 'responders', '~> 1.1.2'
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1.0'

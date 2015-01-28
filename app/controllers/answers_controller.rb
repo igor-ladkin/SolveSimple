@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
 	authorize_resource
 
 	def new
-		@answer = Answer.new
+		@answer = @question.answers.build
 
 		respond_to do |format|
 			format.html { redirect_to @question }
@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
 	end
 
 	def create
-		@answer = @question.answers.new(answer_params.merge(user: current_user))
+		@answer = @question.answers.build(answer_params.merge(user: current_user))
 
 		respond_to do |format|
 			if @answer.save

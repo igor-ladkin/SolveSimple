@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
 	authorize_resource
 
 	def new
-		@comment = Comment.new
+		@comment = @commentable.comments.build
 
 		respond_to do |format|
 			format.html { redirect_to @commentable }
@@ -15,7 +15,7 @@ class CommentsController < ApplicationController
 	end
 
 	def create
-		@comment = @commentable.comments.new(comment_params.merge(user: current_user))
+		@comment = @commentable.comments.build(comment_params.merge(user: current_user))
 		
 		respond_to do |format|
 			if @comment.save
