@@ -1,10 +1,22 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   concern :commentable do
     resources :comments, except: [:index, :show]
   end
 
   resources :questions, concerns: :commentable, shallow: true do
     resources :answers, except: [:index, :show], concerns: :commentable
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+      end
+      resources :questions, only: [:index, :show, :create] do
+        resources :answers, only: [:index, :show, :create]
+      end
+    end
   end
 
   #resources :questions, shallow: true do

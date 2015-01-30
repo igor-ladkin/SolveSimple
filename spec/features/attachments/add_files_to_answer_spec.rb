@@ -21,7 +21,7 @@ feature 'Attach files to answer', %q{
 		click_on 'Create answer'
 
 		within '#answers' do
-			expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
+			expect(page).to have_link 'spec_helper.rb', href: "#{Rails.root}/spec/support/uploads/attachment/file/1/spec_helper.rb"
 		end
 	end
 end

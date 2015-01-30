@@ -41,6 +41,10 @@ gem 'omniauth-facebook', '~> 2.0.0'
 gem 'omniauth-twitter', '~> 1.1.0'
 gem 'cancancan', '~> 1.10.1'
 gem 'responders', '~> 1.1.2'
+gem 'doorkeeper', '~> 2.1.0'
+gem 'active_model_serializers', '~> 0.9.3'
+gem 'oj', '~> 2.11.4'
+gem 'oj_mimic_json', '~> 1.0.1'
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1.0'
@@ -54,6 +58,7 @@ group :test do
 	gem 'database_cleaner', '~> 1.3.0'
 	gem 'launchy', '~> 2.4.3'
 	gem 'capybara-webkit', '~> 1.3.1'
+	gem 'json_spec', '~> 1.1.4'
 end
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
