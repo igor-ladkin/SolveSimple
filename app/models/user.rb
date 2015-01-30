@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, omniauth_providers: [:facebook, :twitter]
 
-  has_many :authorizations
+  has_many :authorizations, dependent: :delete_all
   has_many :questions
   has_many :answers
   has_many :comments

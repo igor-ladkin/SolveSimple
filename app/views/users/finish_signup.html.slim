@@ -1,0 +1,15 @@
+h2
+  | Add Email
+= simple_form_for(current_user, as: :user, url: finish_signup_path(current_user), html: { role: 'form'}) do |f|
+  - if @show_errors && current_user.errors.any?
+    #error_explanation
+      - current_user.errors.full_messages.each do |msg|
+        = msg
+        br
+  .form-group
+      =f.label :email
+      =f.email_field :email, autofocus: true, value: '', placeholder: 'change@me.com', class: 'form-control'
+      p
+        | Please confirm your email.
+  .form-actions
+    = f.submit 'Continue', class: 'btn btn-default'
