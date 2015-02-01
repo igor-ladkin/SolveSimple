@@ -1,11 +1,15 @@
 .answer class='row' data-commentable="answer-#{answer.id}"
 	= render 'votes/vote'
 
-	.col-sm-10
+	.col-sm-8
 		p = answer.body
 		- unless answer.attachments.empty? 
 			.attachments class='col-sm-6 col-sm-offset-6 text-right'
 				= render answer.attachments
+	- if can?(:update, @question)
+		.approving class='col-sm-2 text-center'
+			= link_to '#' do
+				i.fa class='fa-check fa-2x'
 	.col-sm-10 class='col-sm-offset-2 controls'
 		.col-sm-6
 			- if can?(:create, Comment)
