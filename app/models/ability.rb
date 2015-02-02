@@ -26,5 +26,8 @@ class Ability
     can :me, User
     can :create, [Question, Answer, Comment]
     can [:update, :destroy], [Question, Answer, Comment], user: user
+    can :approve, Answer do
+      |answer| answer.question.user == user 
+    end
   end
 end

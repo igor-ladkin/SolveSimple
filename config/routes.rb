@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   end
 
   resources :questions, concerns: :commentable, shallow: true do
-    resources :answers, except: [:index, :show], concerns: :commentable
+    resources :answers, except: [:index, :show], concerns: :commentable do
+      patch :approve, on: :member
+    end
   end
 
   namespace :api do

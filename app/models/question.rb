@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
 	belongs_to :user
-	has_many :answers, dependent: :destroy
+	has_many :answers, dependent: :destroy, inverse_of: :question
 	has_many :comments, as: :commentable, dependent: :destroy
 	has_many :attachments, as: :attachmentable, dependent: :destroy
 	has_and_belongs_to_many :tags
@@ -11,6 +11,14 @@ class Question < ActiveRecord::Base
 	validates :title, :body, presence: true
 
 	accepts_nested_attributes_for :attachments, allow_destroy: true
+
+	def solution
+		self.answers.find_by(approved: true)
+	end
+
+	def has_solution?
+		self.solution ? true : false
+	end
 
 	private
 

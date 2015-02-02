@@ -1,0 +1,7 @@
+if( $('.alert-info').length ){
+	$('.alert-info').html('You have successfully approved an answer to your question.');
+} else {
+	$('#main').prepend('<div class="alert alert-info">You have successfully approved an answer to your question.</div>');
+}
+
+$('#answers').html('<%= j render "questions/answers" %>');

@@ -143,6 +143,28 @@ RSpec.describe AnswersController, :type => :controller do
 		it_behaves_like 'full access to answers'
 	end
 
+	context 'author of the question tries to approve an answer' do
+		describe 'PATCH #approve' do
+			sign_in_user
+
+			let!(:other_user) { create(:user) }
+			let!(:authors_question) { create(:question, user: @user) }
+			let!(:answer) { create(:answer, question: authors_question, user: other_user) }
+
+			before { xhr :patch, :approve, id: answer }
+
+			it 'sets :approved status of an answer to true' do
+				answer.reload
+				debugger
+				expect(answer.approved).to eq true
+			end
+
+			it 'renders the :approve template' do	
+				expect(response).to render_template :approve
+			end
+		end
+	end
+
 	context 'guest access to answers' do
 		describe 'GET #new' do
 			it 'requires login' do

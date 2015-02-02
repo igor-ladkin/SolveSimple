@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
 	before_action :authenticate_user!, except: [:index, :show]
-	before_action :load_question, only: [:show, :edit, :update, :destroy]
+	before_action :load_question, only: [:edit, :update, :destroy]
 
 	authorize_resource
 
@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def show
+		@question = Question.includes(:tags, :comments, :attachments, answers: [:comments, :attachments]).find(params[:id])
 	end
 
 	def new

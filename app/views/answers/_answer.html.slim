@@ -1,4 +1,4 @@
-.answer class='row' data-commentable="answer-#{answer.id}"
+.answer.row class=('bg-success approved' if answer.is_a_solution?) data-commentable="answer-#{answer.id}"
 	= render 'votes/vote'
 
 	.col-sm-8
@@ -6,9 +6,9 @@
 		- unless answer.attachments.empty? 
 			.attachments class='col-sm-6 col-sm-offset-6 text-right'
 				= render answer.attachments
-	- if can?(:update, @question)
+	- if can?(:approve, answer)
 		.approving class='col-sm-2 text-center'
-			= link_to '#' do
+			= link_to approve_answer_path(answer), method: :patch, remote: true do
 				i.fa class='fa-check fa-2x'
 	.col-sm-10 class='col-sm-offset-2 controls'
 		.col-sm-6

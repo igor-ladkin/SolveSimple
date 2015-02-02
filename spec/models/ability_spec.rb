@@ -44,5 +44,8 @@ RSpec.describe Ability do
 
     it { is_expected.to be_able_to :destroy, create(:comment, user: user), user: user }
     it { is_expected.to_not be_able_to :destroy, create(:comment, user: other), user: user }
+
+    it { is_expected.to be_able_to :approve, create(:answer, question: create(:question, user: user)), user: other }
+    it { is_expected.to_not be_able_to :approve, create(:answer, question: create(:question, user: other)), user: other }
   end
 end

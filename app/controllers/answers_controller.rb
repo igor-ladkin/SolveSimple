@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
 	before_action :authenticate_user!
 	before_action :get_question, only: [:new, :create]
-	before_action :load_answer, only: [:edit, :update, :destroy]
+	before_action :load_answer, only: [:edit, :update, :destroy, :approve]
 
 	authorize_resource
 
@@ -49,6 +49,11 @@ class AnswersController < ApplicationController
 	def destroy
 		@answer.destroy
 		redirect_to @answer.question
+	end
+
+	def approve
+		@question = @answer.question
+		@answer.approve
 	end
 
 	private

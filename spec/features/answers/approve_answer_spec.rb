@@ -19,7 +19,7 @@ feature 'Add question', %q{
 				find('i.fa-check').click
 			end
 
-			expect(page).to have_content 'You have successfully approved an answer to yours question.'
+			expect(page).to have_content 'You have successfully approved an answer to your question.'
 		end
 	end
 
