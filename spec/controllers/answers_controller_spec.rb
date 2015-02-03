@@ -155,7 +155,6 @@ RSpec.describe AnswersController, :type => :controller do
 
 			it 'sets :approved status of an answer to true' do
 				answer.reload
-				debugger
 				expect(answer.approved).to eq true
 			end
 

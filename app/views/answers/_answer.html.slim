@@ -24,6 +24,6 @@
 					= link_to 'Delete', answer, method: :delete, data: { confirm: 'Are you sure?' }
 	- unless answer.comments.empty?
 		.col-sm-12
-			.comments id="answer-#{answer.id}-comments" class='row well well-sm'
+			.comments id="answer-#{answer.id}-comments" class='well well-sm'
 				= render 'comments/comments', commentable: answer
 		

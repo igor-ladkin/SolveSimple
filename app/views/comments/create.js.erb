@@ -11,7 +11,7 @@ if( $('.alert-info').length ){
 
 	if( $('#' + selector).length === 0 ){
 	$("[data-commentable='<%= j "#{@comment.commentable_type.downcase}-#{@comment.commentable.id}" %>']").
-				after('<div class="row"><div id="' + selector + '" class="comments well well-sm"></div></div>');
+				append('<div class="col-sm-12"><div id="' + selector + '" class="comments well well-sm"></div></div>');
   } 
 
 	$('#' + selector).html('<%= j render "comments/comments", commentable: @comment.commentable %>');

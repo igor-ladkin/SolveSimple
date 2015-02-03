@@ -11,7 +11,7 @@ feature 'Add question', %q{
 	given!(:answer) { create(:answer, question: question, user: user) }
 
 	context 'Authenticated author of a question tries to' do
-		scenario "approve another user's answer to own question" do
+		scenario "approve another user's answer to own question", js: true do
 			sign_in author
 
 			visit question_path(question)
@@ -19,6 +19,7 @@ feature 'Add question', %q{
 				find('i.fa-check').click
 			end
 
+			expect(page).to have_css(".approved")
 			expect(page).to have_content 'You have successfully approved an answer to your question.'
 		end
 	end

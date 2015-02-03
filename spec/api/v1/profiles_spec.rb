@@ -2,17 +2,9 @@ require 'rails_helper'
 
 RSpec.describe 'Profile API' do
 	describe 'GET /me' do
-		context 'unauthorized' do
-			it 'returns 401 status if there is no access_token' do
-				get '/api/v1/profiles/me', format: :json
-				expect(response.status).to eq 401
-			end
+		let(:api_path) { '/api/v1/profiles/me' }
 
-			it 'returns 401 status if access_token is invalid' do
-				get '/api/v1/profiles/me', access_token: '1234', format: :json
-				expect(response.status).to eq 401
-			end
-		end
+		it_behaves_like 'API authenticable'
 
 		context 'authorized' do
 			let(:me) { create(:user) }
@@ -35,6 +27,10 @@ RSpec.describe 'Profile API' do
 					expect(response.body).to_not have_json_path(attr)
 				end
 			end
+		end
+
+		def do_request(options = {})
+			get '/api/v1/profiles/me', { format: :json }.merge(options)
 		end
 	end
 end

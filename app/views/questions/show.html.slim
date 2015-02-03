@@ -31,7 +31,7 @@
 							|&nbsp;
 							= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' }
 		- unless @question.comments.empty?
-			.row
+			.col-sm-12
 				.comments id="question-#{@question.id}-comments" class='well well-sm'
 					= render 'comments/comments', commentable: @question
 		- if can?(:create, Answer)
