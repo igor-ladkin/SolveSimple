@@ -8,10 +8,12 @@ feature 'Add question', %q{
 	given!(:user) { create(:user) }
 
 	context 'Authenticated user tries to' do
-		scenario 'add a new question', js: true do
+		before(:each) do
 			sign_in user
-
 			visit questions_path
+		end
+
+		scenario 'add a new question', js: true do
 			click_on 'Ask question'
 			fill_in 'Title', with: 'Testing question.'
 			fill_in 'Body', with: 'Can you give a simple answer?'
@@ -22,9 +24,6 @@ feature 'Add question', %q{
 		end
 
 		scenario 'add a new question with tags', js: true do
-			sign_in user
-
-			visit questions_path
 			click_on 'Ask question'
 			fill_in 'Title', with: 'Testing tags.'
 			fill_in 'Body', with: 'Ok lets try adding tags.'
@@ -38,9 +37,6 @@ feature 'Add question', %q{
 		end
 
 		scenario 'add an invalid new question', js: true do
-			sign_in user
-
-			visit questions_path
 			click_on 'Ask question'
 			fill_in 'Title', with: nil
 			fill_in 'Body', with: 'Can you give a simple answer?'

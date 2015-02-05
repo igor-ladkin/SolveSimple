@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     resources :comments, except: [:index, :show]
   end
 
+  resource :profiles, only: [:edit, :update] do
+    get :me, on: :collection
+  end
+
   resources :questions, concerns: :commentable, shallow: true do
     resources :answers, except: [:index, :show], concerns: :commentable do
       patch :approve, on: :member

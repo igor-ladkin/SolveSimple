@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
 	it { is_expected.to validate_presence_of :email }
 	it { is_expected.to validate_presence_of :password }
+	it { is_expected.to have_one :profile }
 	it { is_expected.to have_many :questions }
 	it { is_expected.to have_many :answers }
 	it { is_expected.to have_many :comments }
@@ -82,6 +83,25 @@ RSpec.describe User, :type => :model do
 					expect(authorization.provider).to eq auth.provider
 					expect(authorization.uid).to eq auth.uid
 				end
+			end
+		end
+	end
+
+	describe '.display_name' do
+		context 'user has no profile information' do
+			let(:user) { create(:user) }
+
+			it 'returns email' do
+				expect(user.display_name).to eq user.email
+			end
+		end
+
+		context 'user has some profile information' do
+			let(:user) { create(:user_with_profile) }
+
+			it 'returns full name' do
+				user
+				expect(user.display_name).to eq "#{user.first_name} #{user.last_name}"
 			end
 		end
 	end

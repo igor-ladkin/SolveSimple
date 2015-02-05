@@ -1,8 +1,8 @@
 class QuestionsController < ApplicationController
+	authorize_resource
+	
 	before_action :authenticate_user!, except: [:index, :show]
 	before_action :load_question, only: [:edit, :update, :destroy]
-
-	authorize_resource
 
 	def index
 		@questions = Question.includes(:tags).order(created_at: :desc)

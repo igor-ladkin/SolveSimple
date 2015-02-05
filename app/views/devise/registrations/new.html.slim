@@ -6,6 +6,12 @@ h2
     = f.input :email, required: true, autofocus: true
     = f.input :password, required: true, hint: ("#{@minimum_password_length} characters minimum" if @validatable)
     = f.input :password_confirmation, required: true
+    h2
+     | Profile information
+    = f.simple_fields_for :profile do |p|
+    	= p.input :first_name
+    	= p.input :last_name
+    	= p.input :nickname
   .form-actions
     = f.button :submit, "Sign up"
 = render "devise/shared/links"

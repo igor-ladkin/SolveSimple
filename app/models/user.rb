@@ -10,8 +10,13 @@ class User < ActiveRecord::Base
   has_many :questions
   has_many :answers
   has_many :comments
+  has_one :profile
+
+  delegate :first_name, :last_name, :nickname, to: :profile
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
+
+  accepts_nested_attributes_for :profile
 
   def self.find_for_oauth(auth)
   	authorization = Authorization.find_or_create_by(uid: auth.uid, provider: auth.provider)
@@ -41,7 +46,15 @@ class User < ActiveRecord::Base
     user
   end
 
+  def display_name
+    self.profile.display_name || self.email
+  end
+
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
+  end
+
+  def profile
+    super || build_profile
   end
 end
