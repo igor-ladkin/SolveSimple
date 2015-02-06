@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Profile, :type => :model do
   it { is_expected.to belong_to :user }
 
-  describe '.display_name' do
+  describe '#display_name' do
   	let(:profile_with_full_info) { create(:profile) }
   	let(:profile_with_first_name) { create(:profile, last_name: nil, nickname: nil) }
   	let(:profile_with_last_name) { create(:profile, first_name: nil, nickname: nil) }

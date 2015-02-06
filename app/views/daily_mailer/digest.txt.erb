@@ -1,0 +1,6 @@
+Welcome to SolveSimple, <%= @user.display_name %>
+=====================================================
+
+Here is a list of our latest questions.
+- @questions.each do |question|
+	= link_to "#{question.title}", question_url(question)

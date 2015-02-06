@@ -1,0 +1,11 @@
+doctype html
+html lang='en'
+	head
+		meta charset='UTF-8'
+	body
+		h1 Welcome to SolveSimple, #{@user.display_name}
+		p
+			| Here is a list of our latest questions.
+		ul
+			- @questions.each do |question|
+				li = link_to "#{question.title}", question_url(question)	

@@ -87,7 +87,7 @@ RSpec.describe User, :type => :model do
 		end
 	end
 
-	describe '.display_name' do
+	describe '#display_name' do
 		context 'user has no profile information' do
 			let(:user) { create(:user) }
 
@@ -103,6 +103,17 @@ RSpec.describe User, :type => :model do
 				user
 				expect(user.display_name).to eq "#{user.first_name} #{user.last_name}"
 			end
+		end
+	end
+
+	describe '.send_daily_digest' do
+		let(:users) { create_list(:user, 2) }
+
+		it 'sends daily digest to all users' do
+			users.each do |user|
+				expect(DailyMailer).to receive(:digest).with(user).and_call_original
+			end
+			User.send_daily_digest
 		end
 	end
 end

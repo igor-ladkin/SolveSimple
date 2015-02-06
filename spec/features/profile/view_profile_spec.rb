@@ -16,7 +16,7 @@ feature 'View profile page', %q{
 				click_on "Hello #{user.display_name}"
 			end
 
-			expect(page).to have_content('Your profile')
+			expect(page).to have_content("Hello, my name is #{user.display_name}")
 		end
 	end
 

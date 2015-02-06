@@ -57,4 +57,10 @@ class User < ActiveRecord::Base
   def profile
     super || build_profile
   end
+
+  def self.send_daily_digest
+    find_each do |user|
+      DailyMailer.delay.digest(user)
+    end
+  end
 end

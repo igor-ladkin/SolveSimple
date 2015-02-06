@@ -12,6 +12,8 @@ class Question < ActiveRecord::Base
 
 	accepts_nested_attributes_for :attachments, allow_destroy: true
 
+	scope :latest, -> { where("created_at >= ?", Time.zone.now - 1.day) }
+
 	def solution
 		self.answers.find_by(approved: true)
 	end
