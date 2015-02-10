@@ -1,0 +1,19 @@
+.row
+  .search class='col-sm-8 col-sm-offset-2'
+    = form_tag '/search', method: :get, remote: true do
+      .input-group
+        = text_field_tag :q, nil, class: 'form-control', placeholder: 'You are lookin for...'
+        span class="input-group-btn"
+          button#search-options class="btn btn-default" type="button"
+            i.fa class='fa-wrench'
+      .filters class='hidden'
+        = label_tag :search_questions, class: 'checkbox-inline'
+          = check_box_tag :search_questions, 1, true
+          | questions
+        = label_tag :search_answers, class: 'checkbox-inline'
+          = check_box_tag :search_answers, 1, true
+          | answers
+        = label_tag :search_comments, class: 'checkbox-inline'
+          = check_box_tag :search_comments, 1, true
+          | comments
+      = submit_tag 'Search', class: 'btn btn-info btn-lg custom-width', id: 'search'

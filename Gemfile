@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle ruby -vedge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.8'
+gem 'rails', ' ~> 4.1'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
@@ -48,6 +48,8 @@ gem 'oj_mimic_json', '~> 1.0.1'
 gem 'sidekiq', '~> 3.3.1'
 gem 'sidetiq', '~> 0.6.3'
 gem 'sinatra', '>= 1.3.0', require: nil
+gem 'mysql2', '~> 0.3.17'
+gem 'thinking-sphinx', '~> 3.1.3'
 
 group :test, :development do
   gem 'rspec-rails', '~> 3.1.0'

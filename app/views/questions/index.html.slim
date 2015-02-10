@@ -5,9 +5,15 @@
 		  | This is a short list of problems which humanity tries to solve in their everyday life.
 		  br
 		  |	Help them and get some karma points, because the last thing you would like to do is joking bad with karma.
+		  br
+		  | You can try to look for an answer with
+		
+		= render 'search_form'
+		p.lead
+			| or you can ask for help from community with
 		- if can?(:create, Question)
-			.text-center
-				= link_to 'Ask question', new_question_path, remote: true, class: 'btn btn-primary btn-lg', 
+			.ask
+				= link_to 'Ask question', new_question_path, remote: true, class: 'btn btn-primary btn-lg custom-width', id: 'ask-question',
 					data: { toggle: 'modal', target: '#formModal'}
 		hr
 

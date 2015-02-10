@@ -11,7 +11,9 @@ Rails.application.routes.draw do
     resources :comments, except: [:index, :show]
   end
 
-  root to: 'questions#index' 
+  root to: 'questions#index'
+
+  get 'search', to: 'search#search', as: 'search'
 
   resource :profiles, only: [:edit, :update] do
     get :me, on: :collection
@@ -33,13 +35,6 @@ Rails.application.routes.draw do
       end
     end
   end
-
-  #resources :questions, shallow: true do
-    #resources :comments, except: [:index, :show], module: :questions
-    #resources :answers, except: [:index, :show] do
-      #resources :comments, except: [:index, :show], module: :answers
-    #end
-  #end
 
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup

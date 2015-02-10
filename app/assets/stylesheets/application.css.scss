@@ -29,3 +29,11 @@ body {
 textarea {
   resize: vertical;
 }
+
+.custom-width {
+	width: 160px;
+}
+
+.input-group, .filters, #search {
+	margin-bottom: 15px;
+}
