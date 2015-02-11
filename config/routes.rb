@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   get 'search', to: 'search#search', as: 'search'
+  get 'tags/:tag', to: 'search#search', as: 'tag'
 
   resource :profiles, only: [:edit, :update] do
     get :me, on: :collection

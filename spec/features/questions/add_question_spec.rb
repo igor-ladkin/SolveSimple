@@ -27,7 +27,7 @@ feature 'Add question', %q{
 			click_on 'Ask question'
 			fill_in 'Title', with: 'Testing tags.'
 			fill_in 'Body', with: 'Ok lets try adding tags.'
-			fill_in 'Tags', with: 'pizza hut'
+			fill_in 'Tags', with: 'pizza, hut'
 			click_on 'Create question'
 
 			within('#question #tags') do

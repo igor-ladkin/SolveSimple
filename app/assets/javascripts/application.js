@@ -17,4 +17,5 @@
 //= require private_pub
 //= require jquery_nested_form
 //= require turbolinks
+//= require bootstrap-tagsinput
 //= require_tree .

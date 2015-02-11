@@ -1,19 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe SearchController, :type => :controller do
-	let!(:question_with_phrase) { create(:question, body: 'Pizza, pasta, ravioli!') }
-	let!(:question_without_phrase) { create(:question, body: 'Blue, yellow, white.') }
-	let!(:answer_with_phrase) { create(:answer, body: 'It was a good pizza, buddy.') }
-	let!(:answer_without_phrase) { create(:answer, body: "I don't know what am I doing here.") }
-	let!(:comment_with_phrase) { create(:comment, body: 'I would like more pizza like that.') }
-	let!(:comment_without_phrase) { create(:comment, body: "I'm good guys! But who cares, right?") }
+	let(:question_with_phrase) { create(:question, body: 'Pizza, pasta, ravioli!') }
+	let(:question_without_phrase) { create(:question, body: 'Blue, yellow, white.') }
+	let(:answer_with_phrase) { create(:answer, body: 'It was a good pizza, buddy.') }
+	let(:answer_without_phrase) { create(:answer, body: "I don't know what am I doing here.") }
+	let(:comment_with_phrase) { create(:comment, body: 'I would like more pizza like that.') }
+	let(:comment_without_phrase) { create(:comment, body: "I'm good guys! But who cares, right?") }
+	let(:question_with_tags) { create(:question_with_tags) }
 
-	describe 'GET /search' do
+	describe 'GET #search' do
 		context 'default search in all classes' do
-    	before { get :search, q: 'pizza' }
+    	before { pending; get :search, q: 'pizza' }
 
 			it 'includes question_with_phrase to @results' do
-				debugger
 				expect(assigns[:results]).to include question_with_phrase
 			end
 

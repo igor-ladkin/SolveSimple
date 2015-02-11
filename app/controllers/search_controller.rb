@@ -2,7 +2,7 @@ class SearchController < ApplicationController
 	skip_authorization_check
 
   def search
-    @results = ThinkingSphinx.search params[:q], classes: filters
+    @results = params[:tag].present? ? Question.tagged_with(params[:tag]) : ThinkingSphinx.search(params[:q], classes: filters)
     put_questions_at_top
   end
 
