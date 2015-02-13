@@ -1,9 +1,12 @@
 class Question < ActiveRecord::Base
+	include Votable
+
 	belongs_to :user
 	has_many :answers, dependent: :destroy, inverse_of: :question
 	has_many :comments, as: :commentable, dependent: :destroy
 	has_many :attachments, as: :attachmentable, dependent: :destroy
 	has_and_belongs_to_many :tags
+
 	before_save :associate_tags
 
 	attr_writer :tag_names

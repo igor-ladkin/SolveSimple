@@ -11,6 +11,8 @@ RSpec.describe Answer, :type => :model do
   it { is_expected.to have_many :attachments }
   it { is_expected.to have_many :comments }
   it { is_expected.to accept_nested_attributes_for :attachments }
+  it { is_expected.to have_many :votes }
+  it { is_expected.to have_many :voted_users }
 
   describe '.approve' do
   	let(:question) { create(:question) }
