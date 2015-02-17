@@ -1,9 +1,11 @@
 class AnswersController < ApplicationController
+	authorize_resource
+
+	include VotableController
+
 	before_action :authenticate_user!
 	before_action :get_question, only: [:new, :create]
-	before_action :load_answer, only: [:edit, :update, :destroy, :approve]
-
-	authorize_resource
+	before_action :load_answer, except: [:new, :create]
 
 	def new
 		@answer = @question.answers.build
@@ -57,6 +59,10 @@ class AnswersController < ApplicationController
 	end
 
 	private
+
+	def resource
+		@answer || load_answer
+	end
 
 	def get_question
 		@question = Question.find(params[:question_id])

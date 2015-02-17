@@ -1,8 +1,10 @@
 class QuestionsController < ApplicationController
 	authorize_resource
+
+	include VotableController
 	
 	before_action :authenticate_user!, except: [:index, :show]
-	before_action :load_question, only: [:edit, :update, :destroy]
+	before_action :load_question, except: [:new, :index, :show, :create]
 
 	def index
 		@questions = Question.includes(:tags).order(created_at: :desc)
@@ -29,7 +31,7 @@ class QuestionsController < ApplicationController
 	end
 
 	def create
-		@question = current_user.questions.new(question_params)
+		@question = current_user.questions.build(question_params)
 
 		respond_to do |format|
 			if @question.save
@@ -65,6 +67,10 @@ class QuestionsController < ApplicationController
 	end
 
 	private
+
+	def resource
+		@question
+	end
 
 	def load_question
 		@question = Question.find(params[:id])

@@ -1,46 +1,48 @@
 .row
-	.col-sm-10 class='col-sm-offset-1'
-		article#question class='row' data-commentable="question-#{@question.id}"
-			.h1
-				= link_to @question.title, @question
-			hr
-			
-			= render 'votes/vote'
+  .col-sm-10 class='col-sm-offset-1'
+    article#question class='row' data-commentable="question-#{@question.id}"
+      .h1
+        = link_to @question.title, @question
+      hr
+      
+      = render 'votes/vote', votable: @question
 
-			.col-sm-10
-				p.lead
-					= @question.body
-				- unless @question.tags.empty?
-					#tags class='col-sm-6'
-						= render @question.tags
-				- unless @question.attachments.empty? 
-					.attachments class='col-sm-6 text-right'
-						= render @question.attachments
-			.col-sm-10 class='col-sm-offset-2 controls'
-				.col-sm-6
-					- if can?(:create, Comment)
-						= link_to 'Leave comment', new_question_comment_path(@question), remote: true,
-							data: { toggle: 'modal', target: '#formModal' }
-				.text-right	class='col-sm-6'
-					- if can?(:update, @question, user: current_user)
-						.question-controls
-							= link_to 'Back', questions_path
-							|&nbsp;
-							= link_to 'Edit', edit_question_path(@question), remote: true,
-								data: { toggle: 'modal', target: '#formModal' }
-							|&nbsp;
-							= link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' }
-		- unless @question.comments.empty?
-			.col-sm-12
-				.comments id="question-#{@question.id}-comments" class='well well-sm'
-					= render 'comments/comments', commentable: @question
-		- if can?(:create, Answer)
-			.text-center
-				= link_to 'Add answer', new_question_answer_path(@question), remote: true, class: 'btn btn-primary btn-lg',
-					data: { toggle: 'modal', target: '#formModal' }
-		.row
-			hr
-		#answers 
-			= render 'questions/answers'
+      .col-sm-10
+        p.lead
+          = @question.body
+        - unless @question.tags.empty?
+          #tags class='col-sm-6'
+            = render @question.tags
+        - unless @question.attachments.empty? 
+          .attachments class='col-sm-6 text-right'
+            = render @question.attachments
+      .col-sm-10 class='col-sm-offset-2 controls'
+        .col-sm-6
+          - if can?(:create, Comment)
+            = link_to 'Leave comment', new_question_comment_path(@question), remote: true,
+              data: { toggle: 'modal', target: '#formModal' }
+        .text-right class='col-sm-6'
+          - if can?(:update, @question, user: current_user)
+            .question-controls
+              = link_to 'Back', questions_path
+              |&nbsp;
+              = link_to 'Edit', edit_question_path(@question), remote: true,
+                data: { toggle: 'modal', target: '#formModal' }
+              |&nbsp;
+              = link_to 'Delete', @question, method: :delete, data: { confirm: 'Are you sure?' }
+    - unless @question.comments.empty?
+      .col-sm-12
+        .comments id="question-#{@question.id}-comments" class='well well-sm'
+          = render 'comments/comments', commentable: @question
+    - if can?(:create, Answer)
+      .text-center
+        = link_to 'Add answer', new_question_answer_path(@question), remote: true, class: 'btn btn-primary btn-lg',
+          data: { toggle: 'modal', target: '#formModal' }
+    .row
+      hr
+    .row
+      h2. = pluralize(@question.answers.size, 'answer')
+    #answers 
+      = render 'questions/answers'
 
 = render 'questions/subscriptions'

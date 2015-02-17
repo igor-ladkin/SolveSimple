@@ -1,23 +1,28 @@
 - if results.empty?
-	h2 We are sorry but no record was found according to your request.
-- results.each do |result|
-	- if result.is_a? Question
-	  .result class='question cols-sm-12 bg-info'
-			h2 = link_to result.title, question_path(result)
-			p = result.body
+	h2 We are sorry but no records were found according to your request.
+- else
+	- if params[:tag].present?
+		h2 #{pluralize(@results.count, 'question')} with your tag.
 	- else
-		.result
-			p
-			  span.h4 = result.body 
-			  | &nbsp;
-			  - if result.is_a? Answer
-			  	| is an answer to question 
-			  	= link_to result.question.title, question_path(result.question)
-			  - else
-			  	| is a comment to 
-			  	- if result.commentable.is_a? Question
-			  	  | question
-			  	  = link_to result.commentable.title, question_path(result.commentable)
-			  	- else
-			  	  | answer in question
-			  	  = link_to result.commentable.question.title, question_path(result.commentable.question) 
+		h2 #{pluralize(@results.count, 'record')} with your phrase.
+	- results.each do |result|
+		- if result.is_a? Question
+		  .result class='question cols-sm-12 bg-info'
+				h2 = link_to result.title, question_path(result)
+				p = result.body
+		- else
+			.result
+				p
+				  span.h4 = result.body 
+				  | &nbsp;
+				  - if result.is_a? Answer
+				  	| is an answer to question 
+				  	= link_to result.question.title, question_path(result.question)
+				  - else
+				  	| is a comment to 
+				  	- if result.commentable.is_a? Question
+				  	  | question
+				  	  = link_to result.commentable.title, question_path(result.commentable)
+				  	- else
+				  	  | answer in question
+				  	  = link_to result.commentable.question.title, question_path(result.commentable.question) 

@@ -26,8 +26,11 @@ class Ability
     can :me, [User, Profile]
     can :create, [Question, Answer, Comment]
     can [:update, :destroy], [Question, Answer, Comment], user: user
-    can :approve, Answer do
-      |answer| answer.question.user == user 
+    can [:thumbs_up, :thumbs_down], [Question, Answer] do |resource|
+      resource.user != user
+    end
+    can :approve, Answer do |answer|
+      answer.question.user == user 
     end
   end
 end

@@ -1,7 +1,14 @@
 .voting class='col-sm-2 text-center'
-	.col-sm-12
-		span.h2 0
-	.col-sm-6 
-		i.fa class='fa-2x fa-thumbs-o-down'
-	.col-sm-6
-		i.fa class='fa-2x fa-thumbs-o-up'
+  .col-sm-12
+    span.h2 = votable.rating
+  - if can?(:thumbs_up, votable)
+    - style = styling(votable)
+    .col-sm-6
+      - path = votable.class == Question ? thumbs_down_question_path(votable) : thumbs_down_answer_path(votable)
+      = link_to path, method: :patch do
+        i.fa.fa-2x.fa-thumbs-o-down class=style[:down]
+    .col-sm-6
+      - path = votable.class == Question ? thumbs_up_question_path(votable) : thumbs_up_answer_path(votable)
+      = link_to path, method: :patch do
+        i.fa.fa-2x.fa-thumbs-o-up class=style[:up]
+    

@@ -1,6 +1,6 @@
 class Answer < ActiveRecord::Base
 	belongs_to :user
-	belongs_to :question, inverse_of: :answers
+	belongs_to :question, inverse_of: :answers, counter_cache: true
 	has_many :comments, as: :commentable, dependent: :destroy
 	has_many :attachments, as: :attachmentable, dependent: :destroy
 

@@ -1,33 +1,33 @@
 .row
-	.col-sm-12 class='starter-template text-center'
-		h1 Solve Simple your problems
-		p.lead
-		  | This is a short list of problems which humanity tries to solve in their everyday life.
-		  br
-		  |	Help them and get some karma points, because the last thing you would like to do is joking bad with karma.
-		  br
-		  | You can try to look for an answer with
-		
-		= render 'search_form'
-		p.lead
-			| or you can ask for help from community with
-		- if can?(:create, Question)
-			.ask
-				= link_to 'Ask question', new_question_path, remote: true, class: 'btn btn-primary btn-lg custom-width', id: 'ask-question',
-					data: { toggle: 'modal', target: '#formModal'}
-		hr
+  .col-sm-12 class='starter-template text-center'
+    h1 Solve Simple your problems
+    p.lead
+      | This is a short list of problems which humanity tries to solve in their everyday life.
+      br
+      | Help them and get some karma points, because the last thing you would like to do is joking bad with karma.
+      br
+      | You can try to look for an answer by
+    
+    = render 'search_form'
+    - if can?(:create, Question)
+      p.lead
+        | or you can ask community for help with
+      .ask
+        = link_to 'Ask question', new_question_path, remote: true, class: 'btn btn-primary btn-lg custom-width', id: 'ask-question',
+          data: { toggle: 'modal', target: '#formModal'}
+    hr
 
 .row
-	#questionsTabs class='col-sm-12' role='tabpanel'
-	  ul class='nav nav-tabs' role='tablist'
-	    li role='presentation' class='active'
-	    	a href='#new' aria-controls='new' role='tab' data-toggle='tab' New
-	    li role='presentation'
-	    	a href='#hot' aria-controls='hot' role='tab' data-toggle='tab' Hot
-	  .tab-content
-	    .tab-pane class='active' role='tabpanel' id='new'
-	    	= render 'questions/questions'
-	    .tab-pane role='tabpanel' id='hot'
-	    	| Hot
+  #questionsTabs class='col-sm-12' role='tabpanel'
+    ul class='nav nav-tabs' role='tablist'
+      li role='presentation' class='active'
+        a href='#new' aria-controls='new' role='tab' data-toggle='tab' New
+      li role='presentation'
+        a href='#hot' aria-controls='hot' role='tab' data-toggle='tab' Hot
+    .tab-content
+      .tab-pane class='active' role='tabpanel' id='new'
+        = render 'questions/questions'
+      .tab-pane role='tabpanel' id='hot'
+        | Hot
 
 = subscribe_to '/questions'

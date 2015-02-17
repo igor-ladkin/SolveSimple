@@ -1,13 +1,13 @@
 .row
 	.col-sm-2 class='question-ratings'
 		.col-sm-6 class='given_votes text-center'
-			span.h3 0
+			span.h3 = question.rating_in_percent
 			br
-			p votes
+			p rating
 		.col-sm-6 class='given_answers text-center'	
-			span.h3 0 
+			span.h3 = question.answers_count 
 			br
-			p answers
+			p = 'answer'.pluralize(question.answers_count)
 		
 	.col-sm-10
 		= link_to question.title, question, class: 'h3'

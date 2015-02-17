@@ -1,5 +1,1 @@
-- if params[:tag].present?
-	h2 #{pluralize(@results.count, 'question')} with your tag.
-- else
-	h2 #{pluralize(@results.count, 'record')} with your phrase.
 = render 'results', results: @results

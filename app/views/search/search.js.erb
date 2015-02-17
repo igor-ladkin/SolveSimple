@@ -1,16 +1,20 @@
-$('#questionsTabs ul li').each(function( index ) {
-	$(this).removeClass( 'active' );
-});
-$('#questionsTabs .tab-pane').each(function( index ) {
-	$(this).removeClass( 'active' );
-});
+if ( $('#questionsTabs').length != 0 ) {
+	$('#questionsTabs ul li').each(function( index ) {
+		$(this).removeClass( 'active' );
+	});
+	$('#questionsTabs .tab-pane').each(function( index ) {
+		$(this).removeClass( 'active' );
+	});
 
-if ( $('#search_results').length ) {
-	$('#results_tab').addClass('active');
-	$('#search_results').addClass('active');
-	$('#search_results').html('<%= j render "results", results: @results %>');
+	if ( $('#search_results').length ) {
+		$('#results_tab').addClass('active');
+		$('#search_results').addClass('active');
+		$('#search_results').html('<%= j render "results", results: @results %>');
+	} else {
+		$('#questionsTabs ul').append("<li id= 'results_tab' class='active' role='presentation'><a href='#search_results' aria-controls='search_results' role='tab' data-toggle='tab'>Search</a></li>");
+		$('#questionsTabs .tab-content').append("<div class='tab-pane active' role='tabpanel' id='search_results'></div>");
+		$('#search_results').html('<%= j render "results", results: @results %>')
+	}
 } else {
-	$('#questionsTabs ul').append("<li id= 'results_tab' class='active' role='presentation'><a href='#search_results' aria-controls='search_results' role='tab' data-toggle='tab'>Search</a></li>");
-	$('#questionsTabs .tab-content').append("<div class='tab-pane active' role='tabpanel' id='search_results'></div>");
-	$('#search_results').html('<%= j render "results", results: @results %>')
+	$('#main').html('<%= j render "results", results: @results %>');
 }

@@ -1,5 +1,5 @@
 = simple_nested_form_for @question, remote: true, html: { role: 'form' } do |f|
-	= f.input :title, input_html: { data: { role: 'somerole' } }
+	= f.input :title, autofocus: true, input_html: { data: { role: 'somerole' } }
 	= f.input :body, input_html: { rows: 4 }
 	= f.input :tag_names, label: 'Tags', input_html: { data: { role: 'tagsinput' } }
 	- unless @question.attachments.empty? 

@@ -7,7 +7,7 @@ feature 'Search for content', %q{
 } do
 	given(:question) { create(:question, body: 'test my app') }
 
-	scenario 'search for question' do
+	scenario 'search for question', js: true do
 		visit questions_path
 
 		click_on 'Search'

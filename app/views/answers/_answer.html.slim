@@ -1,5 +1,5 @@
 .answer.row class=('bg-success approved' if answer.is_a_solution?) data-commentable="answer-#{answer.id}"
-	= render 'votes/vote'
+	= render 'votes/vote', votable: answer
 
 	.col-sm-8
 		p = answer.body

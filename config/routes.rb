@@ -11,6 +11,11 @@ Rails.application.routes.draw do
     resources :comments, except: [:index, :show]
   end
 
+  concern :votable do
+    patch :thumbs_up, on: :member
+    patch :thumbs_down, on: :member
+  end
+
   root to: 'questions#index'
 
   get 'search', to: 'search#search', as: 'search'
@@ -20,8 +25,8 @@ Rails.application.routes.draw do
     get :me, on: :collection
   end
 
-  resources :questions, concerns: :commentable, shallow: true do
-    resources :answers, except: [:index, :show], concerns: :commentable do
+  resources :questions, concerns: [:commentable, :votable], shallow: true do
+    resources :answers, except: [:index, :show], concerns: [:commentable, :votable] do
       patch :approve, on: :member
     end
   end

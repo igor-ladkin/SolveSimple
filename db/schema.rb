@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150213123402) do
+ActiveRecord::Schema.define(version: 20150216144511) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,8 @@ ActiveRecord::Schema.define(version: 20150213123402) do
     t.integer  "question_id"
     t.integer  "user_id"
     t.boolean  "approved",    default: false
+    t.integer  "rating",      default: 0
+    t.integer  "votes_count", default: 0
   end
 
   add_index "answers", ["question_id"], name: "index_answers_on_question_id", using: :btree
@@ -117,6 +119,9 @@ ActiveRecord::Schema.define(version: 20150213123402) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "rating",        default: 0
+    t.integer  "answers_count", default: 0
+    t.integer  "votes_count",   default: 0
   end
 
   add_index "questions", ["user_id"], name: "index_questions_on_user_id", using: :btree
@@ -158,7 +163,7 @@ ActiveRecord::Schema.define(version: 20150213123402) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "votes", force: true do |t|
-    t.boolean  "status"
+    t.boolean  "status",       null: false
     t.integer  "votable_id"
     t.string   "votable_type"
     t.datetime "created_at"

@@ -37,4 +37,32 @@ RSpec.describe Question, :type => :model do
       expect(Question.tagged_with('pizza')).to_not include question
     end
   end
+
+  describe '#rating_in_percent' do
+    it 'calculates rating in percentage' do
+      subject.stub_chain(:votes, :size).and_return(10)
+      allow(subject).to receive(:rating).and_return(5)
+      expect(subject.rating_in_percent).to eq ('75')
+    end
+
+    it 'returns 0 rating if there is no votes yet' do
+      subject.stub_chain(:votes, :size).and_return(0)
+      allow(subject).to receive(:rating).and_return(0)
+      expect(subject.rating_in_percent).to eq ('0')
+    end
+  end
+
+  describe '#already_voted_by?' do
+    let(:user) { create(:user) }
+
+    it 'returns true if user has already voted for this question' do
+      allow(subject.votes).to receive(:where).and_return(user)
+      expect(subject.already_voted_by?(user)).to eq true
+    end
+
+    it 'returns false if user has not voted for this question' do
+      allow(subject.votes).to receive(:where).and_return(nil)
+      expect(subject.already_voted_by?(user)).to eq false
+    end
+  end
 end

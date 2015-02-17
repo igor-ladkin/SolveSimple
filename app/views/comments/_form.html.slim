@@ -1,4 +1,4 @@
 = simple_form_for [@commentable, @comment], remote: true, html: { role: 'form' } do |f|
-	= f.input :body, input_html: { rows: 4 }
+	= f.input :body, input_html: { rows: 4 }, autofocus: true
 	.text-center
 		= f.button :submit, "#{ @comment.new_record? ? 'Create comment' : 'Update comment' }", class: 'btn btn-success'

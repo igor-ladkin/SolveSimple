@@ -34,7 +34,7 @@ RSpec.describe AnswersController, :type => :controller do
 			sign_in_user
 
 			context 'with valid attributes' do
-				it 'saves the new answer to the question in the database' do
+				it 'saves a new answer to the question in the database' do
 					expect { xhr :post, :create, question_id: question, answer: attributes_for(:answer) }.to change(Answer, :count).by(1)
 				end
 
@@ -53,6 +53,19 @@ RSpec.describe AnswersController, :type => :controller do
 					xhr :post, :create, question_id: question, answer: attributes_for(:answer, body: nil)
 					expect(response).to render_template :new
 				end
+			end
+		end
+
+		describe 'PATCH #thumbs_up' do
+			sign_in_user
+
+			it 'saves a new answer in the database' do
+				expect { patch :thumbs_up, id: answer }.to change(Vote, :count).by(1)
+			end
+
+			it 'redirects back to question#show' do
+				patch :thumbs_up, id: answer
+				expect(response).to redirect_to question_path(question)
 			end
 		end
 	end
@@ -162,39 +175,5 @@ RSpec.describe AnswersController, :type => :controller do
 				expect(response).to render_template :approve
 			end
 		end
-	end
-
-	context 'guest access to answers' do
-		describe 'GET #new' do
-			it 'requires login' do
-				get :new, question_id: question
-			end
-		end
-
-		describe 'POST #create' do
-			it 'requires login' do
-				post :create, question_id: question, answer: attributes_for(:answer)
-			end
-		end
-
-		describe 'GET #edit' do
-			it 'requires login' do
-				get :edit, question_id: question, id: answer
-			end
-		end
-
-		describe 'PATCH #update' do
-			it 'requires login' do
-				patch :update, question_id: question, id: answer, answer: attributes_for(:answer)
-			end
-		end
-
-		describe 'DELETE #destroy' do
-			it 'requires login' do
-				delete :destroy, question_id: question, id: answer
-			end
-		end
-
-		after { expect(response).to require_login }
 	end
 end
