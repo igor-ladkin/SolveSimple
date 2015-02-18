@@ -1,7 +1,7 @@
 = simple_nested_form_for [@question, @answer], remote: true, html: { role: 'form' } do |f|
 	= f.input :body, input_html: { rows: 4 }, autofocus: true
 	- unless @answer.attachments.empty? 
-		.attachments class='col-sm-6 text-center'
+		.attachments class='col-sm-12 text-center'
 			= render @answer.attachments
 	= f.simple_fields_for :attachments, @answer.attachments.build do |a|
 		= a.input :file	
