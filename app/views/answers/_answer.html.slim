@@ -5,7 +5,8 @@
 		p = answer.body
 		- unless answer.attachments.empty? 
 			.attachments class='col-sm-6 col-sm-offset-6 text-right'
-				= render answer.attachments
+				ul.list-inline
+				  = render answer.attachments
 	- if can?(:approve, answer)
 		.approving class='col-sm-2 text-center'
 			= link_to approve_answer_path(answer), method: :patch, remote: true do

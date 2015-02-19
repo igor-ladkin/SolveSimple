@@ -15,7 +15,8 @@
             = render @question.tags
         - unless @question.attachments.empty? 
           .attachments class='col-sm-6 text-right'
-            = render @question.attachments
+            ul.list-inline
+              = render @question.attachments
       .col-sm-10 class='col-sm-offset-2 controls'
         .col-sm-6
           - if can?(:create, Comment)
@@ -41,7 +42,7 @@
     .row
       hr
     .row
-      h2. = pluralize(@question.answers.size, 'answer')
+      h2#answers-number = pluralize(@question.answers.size, 'answer')
     #answers 
       = render 'questions/answers'
 

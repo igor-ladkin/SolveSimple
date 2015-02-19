@@ -2,12 +2,13 @@
 	= f.input :title, autofocus: true, input_html: { data: { role: 'somerole' } }
 	= f.input :body, input_html: { rows: 4 }
 	= f.input :tag_names, label: 'Tags', input_html: { data: { role: 'tagsinput' } }
-	- unless @question.attachments.empty? 
-		.attachments class='col-sm-12 text-center'
-			= render @question.attachments
+	.form-attachments class='col-sm-12 text-center'
+		- unless @question.attachments.empty? 
+		  ul.list-inline
+			  = render @question.attachments
 	br
 	= f.simple_fields_for :attachments, @question.attachments.build do |a|
-		= a.input :file	
-	p = f.link_to_add 'Add new file', :attachments
+		= a.input :file, wrapper_html: { class: 'hidden' }
+	= f.link_to_add 'Add new file', :attachments, class: 'btn btn-default btn-sm'
 	.text-center
 		= f.button :submit, "#{ @question.new_record? ? 'Create question' : 'Update question' }", class: 'btn btn-success'

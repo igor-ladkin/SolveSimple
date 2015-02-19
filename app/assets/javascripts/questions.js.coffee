@@ -11,5 +11,14 @@ setup = ->
 		console.log('button was pressed!')
 		$('.filters').toggleClass('hidden')
 
-$(document).ready(setup)
-$(document).on('page:load', setup)
+
+
+$(document).ready setup
+$(document).on 'page:load', setup
+
+$(document).on 'nested:fieldAdded', (e) ->
+	field = e.field
+	fileField = field.find('input[type=file]')
+	fileField.click().change (e) ->
+		fileName = $(this).val().split('\\').pop()
+		$('.form-attachments').append(fileName + ' ')

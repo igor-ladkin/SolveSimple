@@ -7,5 +7,6 @@ if( $('.alert-info').length ){
 }
 
 <% publish_to "/questions/#{@question.id}/answers" do %>
+	$('#answers-number').html('<%= j "#{pluralize(@question.answers.size + 1, 'answer')}" %>')
 	$('#answers').html('<%= j render "questions/answers" %>');
 <% end %>

@@ -1,10 +1,11 @@
 = simple_nested_form_for [@question, @answer], remote: true, html: { role: 'form' } do |f|
 	= f.input :body, input_html: { rows: 4 }, autofocus: true
-	- unless @answer.attachments.empty? 
-		.attachments class='col-sm-12 text-center'
-			= render @answer.attachments
+	.form-attachments class='col-sm-12 text-center'
+	  - unless @answer.attachments.empty?
+	    ul.list-inline 
+			  = render @answer.attachments
 	= f.simple_fields_for :attachments, @answer.attachments.build do |a|
-		= a.input :file	
-	p = f.link_to_add 'Add new file', :attachments
+		= a.input :file, wrapper_html { class: 'hidden' }
+	= f.link_to_add 'Add new file', :attachments, class: 'btn btn-default btn-sm'
 	.text-center
 		= f.button :submit, "#{ @answer.new_record? ? 'Create answer' : 'Update answer' }", class: 'btn btn-success'
