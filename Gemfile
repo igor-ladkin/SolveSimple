@@ -50,6 +50,8 @@ gem 'sidetiq', '~> 0.6.3'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'mysql2', '~> 0.3.17'
 gem 'thinking-sphinx', '~> 3.1.3'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 group :development do
 	gem 'capistrano', require: false
