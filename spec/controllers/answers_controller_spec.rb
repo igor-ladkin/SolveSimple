@@ -57,14 +57,15 @@ RSpec.describe AnswersController, :type => :controller do
 		end
 
 		describe 'PATCH #thumbs_up' do
+			let(:new_answer) {create(:answer)}
 			sign_in_user
 
 			it 'saves a new answer in the database' do
-				expect { patch :thumbs_up, id: answer }.to change(Vote, :count).by(1)
+				expect { patch :thumbs_up, id: new_answer }.to change(Vote, :count).by(1)
 			end
 
 			it 'redirects back to question#show' do
-				patch :thumbs_up, id: answer
+				patch :thumbs_up, id: new_answer
 				expect(response).to redirect_to question_path(question)
 			end
 		end

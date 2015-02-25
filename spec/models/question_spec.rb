@@ -40,13 +40,13 @@ RSpec.describe Question, :type => :model do
 
   describe '#rating_in_percent' do
     it 'calculates rating in percentage' do
-      subject.stub_chain(:votes, :size).and_return(10)
+      allow(subject.votes).to receive(:size).and_return(10)
       allow(subject).to receive(:rating).and_return(5)
       expect(subject.rating_in_percent).to eq ('75')
     end
 
     it 'returns 0 rating if there is no votes yet' do
-      subject.stub_chain(:votes, :size).and_return(0)
+      allow(subject.votes).to receive(:size).and_return(0)
       allow(subject).to receive(:rating).and_return(0)
       expect(subject.rating_in_percent).to eq ('0')
     end
