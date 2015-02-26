@@ -53,15 +53,17 @@ RSpec.describe Question, :type => :model do
   end
 
   describe '#already_voted_by?' do
+    let(:author) { create(:user) }
     let(:user) { create(:user) }
+    subject { create(:question, user: author) }
 
     it 'returns true if user has already voted for this question' do
-      allow(subject.votes).to receive(:where).and_return(user)
+      allow(subject.votes).to receive(:where).and_return([user])
       expect(subject.already_voted_by?(user)).to eq true
     end
 
     it 'returns false if user has not voted for this question' do
-      allow(subject.votes).to receive(:where).and_return(nil)
+      allow(subject.votes).to receive(:where).and_return([])
       expect(subject.already_voted_by?(user)).to eq false
     end
   end

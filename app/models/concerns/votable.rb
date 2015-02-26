@@ -9,13 +9,13 @@ module Votable
 	def thumbs_up(user)
 		vote = votes.find_or_initialize_by(user: user)
 		vote.status = true
-		vote.save
+		vote.save!
 	end
 
 	def thumbs_down(user)
 		vote = votes.find_or_initialize_by(user: user)
 		vote.status = false
-		vote.save
+		vote.save!
 	end
 
 	def already_voted_by?(user)

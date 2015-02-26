@@ -61,12 +61,7 @@ RSpec.describe AnswersController, :type => :controller do
 			sign_in_user
 
 			it 'saves a new answer in the database' do
-				expect { patch :thumbs_up, id: new_answer }.to change(Vote, :count).by(1)
-			end
-
-			it 'redirects back to question#show' do
-				patch :thumbs_up, id: new_answer
-				expect(response).to redirect_to question_path(question)
+				expect { patch :thumbs_up, id: new_answer, format: :json }.to change(Vote, :count).by(1)
 			end
 		end
 	end

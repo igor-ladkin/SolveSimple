@@ -5,10 +5,10 @@
     - style = styling(votable)
     .col-sm-6
       - path = votable.class == Question ? thumbs_down_question_path(votable) : thumbs_down_answer_path(votable)
-      = link_to path, method: :patch do
+      = link_to path, class: 'thumbs-down', remote: true, method: :patch, data: { type: :json } do
         i.fa.fa-2x.fa-thumbs-o-down class=style[:down]
     .col-sm-6
       - path = votable.class == Question ? thumbs_up_question_path(votable) : thumbs_up_answer_path(votable)
-      = link_to path, method: :patch do
+      = link_to path, class: 'thumbs-up', remote: true, method: :patch, data: { type: :json } do
         i.fa.fa-2x.fa-thumbs-o-up class=style[:up]
     

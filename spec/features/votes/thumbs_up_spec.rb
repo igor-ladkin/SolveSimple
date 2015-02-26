@@ -10,7 +10,7 @@ feature 'Thumbs up', %q{
 	given!(:question) { create(:question, user: author) }
 
 	context 'Authenticated user tries to' do
-		scenario "thumbs up another user's question" do
+		scenario "thumbs up another user's question", js: true do
 			sign_in user
 
 			visit question_path(question)
@@ -18,33 +18,44 @@ feature 'Thumbs up', %q{
 				find('i.fa-thumbs-o-up').click
 			end
 
-			save_and_open_page
-
-			expect(page).to have_css('i.text-muted')
-		end
-
-		scenario 'thumbs up question twice' do
-			sign_in user
-
-			visit question_path(question)
-			within('#question .voting') do
-				find('i.fa-thumbs-o-up').click
-			end
-
-			visit question_path(question)
-
-			expect(page.find('#question a.disabled').count).to eq 2
 			expect(page.find('#question')).to have_css('i.fa-thumbs-o-up.text-success')
 			expect(page.find('#question')).to have_css('i.fa-thumbs-o-down.text-muted')
 		end
-		scenario 'thumbs up question after he thumbs down it'
+
+		scenario 'thumbs up question after he thumbs down it', js: true do
+			sign_in user
+
+			visit question_path(question)
+			within('#question .voting') do
+				find('i.fa-thumbs-o-up').click
+				find('i.fa-thumbs-o-down').click
+			end
+
+			expect(page.find('#question')).to have_css('i.fa-thumbs-o-down.text-danger')
+			expect(page.find('#question')).to have_css('i.fa-thumbs-o-up.text-muted')
+			expect(page.find('#question')).to_not have_css('i.fa-thumbs-o-up.text-success')
+		end
 	end
 
 	context 'Author tries to' do
-		scenario 'thumbs up his own question'
+		scenario 'thumbs up his own question', js: true do
+			sign_in author
+
+			visit question_path(question)
+			within('#question .voting') do
+				expect(page).to_not have_css('i.fa-thumbs-o-up')
+				expect(page).to_not have_css('i.fa-thumbs-o-down')
+			end
+		end
 	end
 
 	context 'Non-authenticated user tries to' do
-		scenario 'thumbs up question'
+		scenario 'thumbs up question', js: true do
+			visit question_path(question)
+			within('#question .voting') do
+				expect(page).to_not have_css('i.fa-thumbs-o-up')
+				expect(page).to_not have_css('i.fa-thumbs-o-down')
+			end
+		end
 	end
 end
