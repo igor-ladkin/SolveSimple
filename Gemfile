@@ -53,6 +53,7 @@ gem 'thinking-sphinx', '~> 3.1.3'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 gem 'therubyracer'
+gem 'whenever'
 
 group :development do
 	gem 'capistrano', require: false
