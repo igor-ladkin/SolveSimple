@@ -12,6 +12,8 @@ Some technologies used in this project:
 
 * Gentleman's tool kit: Devise, omniAuth, CarrierWave, CanCanCan, etc.
 
+* REST API
+
 * Monitoring with monit
 
 * OAuth provider with doorkeeper
